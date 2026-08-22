@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 1 · 你也是留学生吗？ — Знакомство</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FBF6E9; --paper:#FFFDF6; --paper2:#FFF9EC;
+  --ging:#A9C2DC; --ging-lt:#CBDCEC; --ging-dp:#7B9CC0; --ging-ink:#4B6B8C;
+  --ink:#33475B; --ink2:#5E7387; --ink3:#8296A8;
+  --tom:#D2452C; --tom-lt:#E9765D; --tom-pale:#FBE3DC;
+  --leaf:#75965E; --leaf-pale:#E6EFDF;
+  --lav:#9A8CC4; --lav-pale:#EDE9F7;
+  --sun:#EFC14A; --sun-pale:#FCF2D6;
+  --line:#DCD2BC;
+  --radius:18px;
+  --shadow:0 4px 0 rgba(123,156,192,.16), 0 10px 26px rgba(51,71,91,.09);
+  --shadow-sm:0 2px 0 rgba(123,156,192,.14), 0 6px 16px rgba(51,71,91,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:120px}
+body{
+  margin:0; font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background:var(--cream); font-size:17px; line-height:1.65;
+  -webkit-text-size-adjust:100%;
+}
+
+/* ---------- animated gingham + flowers background ---------- */
+.bg{position:fixed; inset:0; z-index:-2; background:var(--cream);}
+.bg::before{
+  content:''; position:absolute; inset:-10%;
+  background-image:
+    linear-gradient(90deg, rgba(169,194,220,.55) 50%, transparent 50%),
+    linear-gradient(0deg,  rgba(169,194,220,.55) 50%, transparent 50%);
+  background-size:104px 104px, 104px 104px;
+  opacity:.75;
+  animation:drift 60s linear infinite;
+}
+.bg::after{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0%, rgba(255,253,246,.05), rgba(255,253,246,.35) 75%);
+}
+@keyframes drift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-120px,-120px,0)}}
+.petals{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.petal{position:absolute; top:-8vh; opacity:.55; animation:fall linear infinite}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0deg)}
+  100%{transform:translateY(112vh) rotate(420deg)}
+}
+@media (prefers-reduced-motion: reduce){
+  .bg::before,.petal{animation:none}
+}
+
+/* ---------- topbar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  background:rgba(255,253,246,.93); backdrop-filter:blur(10px);
+  border-bottom:2px solid var(--ging-lt);
+}
+.topbar-in{max-width:1080px; margin:0 auto; padding:10px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:10px; margin-right:auto; min-width:0}
+.brand-badge{
+  width:40px;height:40px;border-radius:12px;flex:none;
+  background:repeating-conic-gradient(var(--ging) 0% 25%, #fff 0% 50%) 0 0/16px 16px;
+  border:2px solid var(--ging-dp); display:grid; place-items:center;
+  font-size:19px;
+}
+.brand-t{font-weight:800; font-size:15.5px; line-height:1.2}
+.brand-s{font-size:12.5px; color:var(--ink3); font-weight:700; letter-spacing:.04em; text-transform:uppercase}
+.tbtns{display:flex; gap:8px; flex-wrap:wrap}
+.tgl{
+  font-family:inherit; font-size:13.5px; font-weight:800; cursor:pointer;
+  border:2px solid var(--ging-dp); background:#fff; color:var(--ging-ink);
+  padding:7px 13px; border-radius:999px; transition:.15s; white-space:nowrap;
+}
+.tgl:hover{background:var(--ging-lt)}
+.tgl.off{background:var(--ging-dp); color:#fff; border-color:var(--ging-dp)}
+.tgl.tom{border-color:var(--tom); color:var(--tom)}
+.tgl.tom:hover{background:var(--tom-pale)}
+.progress{height:5px; background:var(--ging-lt)}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--ging-dp),var(--tom-lt)); transition:width .15s}
+
+/* ---------- nav chips ---------- */
+.chips{max-width:1080px; margin:0 auto; padding:12px 18px 0; display:flex; gap:8px; flex-wrap:wrap}
+.chip{
+  font-size:13px; font-weight:800; text-decoration:none; color:var(--ink2);
+  background:var(--paper); border:2px solid var(--line); padding:6px 12px; border-radius:999px;
+}
+.chip:hover{border-color:var(--tom-lt); color:var(--tom)}
+
+/* ---------- layout ---------- */
+main{max-width:1080px; margin:0 auto; padding:22px 18px 60px}
+.hero{
+  background:var(--paper); border:2px solid var(--ging-dp); border-radius:26px;
+  padding:30px 28px; box-shadow:var(--shadow); position:relative; overflow:hidden; margin-bottom:26px;
+}
+.hero::before{
+  content:''; position:absolute; right:-40px; top:-40px; width:190px; height:190px; border-radius:50%;
+  background:repeating-conic-gradient(rgba(169,194,220,.34) 0% 25%, rgba(255,255,255,0) 0% 50%) 0 0/26px 26px;
+  opacity:.7;
+}
+.hero-k{font-size:12.5px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; color:var(--tom)}
+.hero h1{margin:.25em 0 .1em; font-size:clamp(26px,4.4vw,40px); line-height:1.18}
+.hero .zh{font-family:'Noto Serif SC',serif; font-weight:700}
+.hero-py{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--ging-ink); font-weight:600}
+.hero-d{margin-top:14px; max-width:62ch; color:var(--ink2)}
+
+section{
+  background:var(--paper); border:2px solid var(--line); border-radius:var(--radius);
+  padding:26px 26px 28px; margin-bottom:22px; box-shadow:var(--shadow-sm); position:relative;
+}
+section > h2{
+  margin:0 0 6px; font-size:23px; display:flex; align-items:center; gap:11px; flex-wrap:wrap;
+}
+.sec-n{
+  flex:none; width:34px; height:34px; border-radius:11px; display:grid; place-items:center;
+  background:var(--tom); color:#fff; font-size:15px; font-weight:900;
+}
+.sec-sub{margin:0 0 18px; color:var(--ink3); font-weight:700; font-size:14px}
+h3{font-size:18.5px; margin:26px 0 8px}
+h4{font-size:16px; margin:18px 0 6px}
+p{margin:.5em 0}
+a{color:var(--tom)}
+.zh{font-family:'Noto Serif SC',serif}
+.py{font-family:'JetBrains Mono',monospace; color:var(--ging-ink); font-size:.86em; font-weight:600}
+.ru{color:var(--ink2)}
+
+/* toggles */
+body.no-py .py, body.no-py .py-line{display:none !important}
+body.no-tr .tr, body.no-tr .tr-line{display:none !important}
+
+/* ---------- boxes ---------- */
+.box{border:2px solid var(--line); border-radius:14px; padding:16px 18px; margin:16px 0; background:var(--paper2)}
+.box.blue{border-color:var(--ging-dp); background:#F2F7FC}
+.box.tom{border-color:var(--tom-lt); background:var(--tom-pale)}
+.box.leaf{border-color:var(--leaf); background:var(--leaf-pale)}
+.box.lav{border-color:var(--lav); background:var(--lav-pale)}
+.box.sun{border-color:var(--sun); background:var(--sun-pale)}
+.box-t{font-weight:900; font-size:14px; letter-spacing:.05em; text-transform:uppercase; margin-bottom:8px; display:flex; gap:8px; align-items:center}
+.box.blue .box-t{color:var(--ging-ink)} .box.tom .box-t{color:var(--tom)}
+.box.leaf .box-t{color:var(--leaf)} .box.lav .box-t{color:#6E5EA0} .box.sun .box-t{color:#A9822A}
+
+/* ---------- vocab table ---------- */
+.vt{width:100%; border-collapse:collapse; margin-top:10px; font-size:16px}
+.vt th{
+  background:var(--ging-lt); color:var(--ging-ink); font-size:12.5px; text-transform:uppercase;
+  letter-spacing:.06em; padding:9px 10px; text-align:left; border-bottom:2px solid var(--ging-dp);
+}
+.vt td{padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+.vt tr:hover td{background:#FFFCF0}
+.vt .c-h{font-family:'Noto Serif SC',serif; font-size:22px; font-weight:700; white-space:nowrap}
+.vt .c-p{font-family:'JetBrains Mono',monospace; color:var(--ging-ink); font-size:14px; font-weight:600; white-space:nowrap}
+.pos{display:inline-block; font-size:11px; font-weight:900; padding:2px 7px; border-radius:6px; background:var(--lav-pale); color:#6E5EA0; white-space:nowrap}
+.vt .c-e{font-family:'Noto Serif SC',serif; font-size:15px; color:var(--ink2)}
+.star{cursor:pointer; font-size:18px; color:var(--line); user-select:none; background:none; border:none; padding:0 4px}
+.star.on{color:var(--sun)}
+.vt-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+
+/* ---------- dialogue ---------- */
+.dlg{margin-top:14px}
+.turn{display:flex; gap:12px; margin-bottom:14px; align-items:flex-start}
+.turn.r{flex-direction:row-reverse}
+.who{
+  flex:none; width:52px; text-align:center; font-size:11.5px; font-weight:800; color:var(--ink3);
+}
+.who i{
+  display:grid; place-items:center; width:44px; height:44px; margin:0 auto 3px; border-radius:14px;
+  font-family:'Noto Serif SC',serif; font-size:17px; font-style:normal; font-weight:700;
+  background:var(--ging-lt); color:var(--ging-ink); border:2px solid var(--ging-dp);
+}
+.turn.r .who i{background:var(--tom-pale); color:var(--tom); border-color:var(--tom-lt)}
+.bub{
+  flex:1; min-width:0; background:#fff; border:2px solid var(--ging-lt); border-radius:16px; padding:12px 15px;
+}
+.turn.r .bub{border-color:var(--tom-pale); background:#FFFAF8}
+.bub .zh{font-size:20px; line-height:1.9; font-weight:600}
+.bub .py-line{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ging-ink); margin-top:2px; font-weight:600}
+.bub .tr-line{color:var(--ink2); font-size:15px; margin-top:5px; padding-top:5px; border-top:1px dashed var(--line)}
+.stage{font-size:14px; color:var(--ink3); font-style:italic; margin:6px 0 14px; text-align:center}
+
+.text-block{background:#fff; border:2px solid var(--ging-lt); border-radius:16px; padding:18px 20px; margin-top:12px}
+.text-block .zh{font-size:20px; line-height:2.05; font-weight:600}
+.text-block .py-line{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ging-ink); font-weight:600; margin-top:4px}
+.text-block .tr-line{margin-top:12px; padding-top:12px; border-top:2px dashed var(--line); color:var(--ink2)}
+
+/* sentence with pinyin above each chunk */
+.sent{margin:10px 0}
+.sent .zh{font-size:19px; font-weight:600; line-height:1.8}
+
+/* ---------- grammar ---------- */
+.gp{border:2px solid var(--ging-dp); border-radius:16px; margin:20px 0; overflow:hidden; background:#fff}
+.gp-h{background:var(--ging-lt); padding:12px 18px; display:flex; gap:10px; align-items:baseline; flex-wrap:wrap}
+.gp-h b{font-family:'Noto Serif SC',serif; font-size:21px; color:var(--ging-ink)}
+.gp-h span{font-size:14px; color:var(--ink2); font-weight:700}
+.gp-b{padding:16px 18px}
+.scheme{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px; justify-content:center;
+  background:var(--paper2); border:2px dashed var(--ging-dp); border-radius:14px; padding:16px 14px; margin:14px 0;
+}
+.sl{
+  padding:8px 14px; border-radius:10px; font-weight:800; font-size:15px; white-space:nowrap;
+  background:#fff; border:2px solid var(--line); color:var(--ink);
+}
+.sl.k{background:var(--tom); color:#fff; border-color:var(--tom); font-family:'Noto Serif SC',serif; font-size:18px}
+.sl.k2{background:var(--leaf); color:#fff; border-color:var(--leaf); font-family:'Noto Serif SC',serif; font-size:18px}
+.sl.v{background:var(--ging-lt); border-color:var(--ging-dp); color:var(--ging-ink)}
+.sl.o{background:var(--sun-pale); border-color:var(--sun); color:#8B6A16}
+.arw{color:var(--ging-dp); font-weight:900; font-size:18px}
+.ex{margin:9px 0; padding-left:15px; border-left:3px solid var(--ging-lt)}
+.ex .zh{font-size:18px; font-weight:600}
+.ex .py{display:block; font-size:13px}
+.ex .tr{display:block; color:var(--ink2); font-size:14.5px}
+.bad{border-left-color:var(--tom-lt)}
+.bad .zh{color:var(--tom); text-decoration:line-through}
+.warn{background:var(--tom-pale); border:2px solid var(--tom-lt); border-radius:12px; padding:12px 15px; margin:14px 0; font-size:15.5px}
+.warn b{color:var(--tom)}
+
+/* ---------- exercises ---------- */
+.ex-card{border:2px solid var(--line); border-radius:16px; margin:18px 0; background:#fff; overflow:hidden}
+.ex-h{background:var(--sun-pale); border-bottom:2px solid var(--sun); padding:11px 17px; display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.ex-h b{font-size:15.5px}
+.ex-tag{font-size:11px; font-weight:900; letter-spacing:.05em; text-transform:uppercase; background:#fff; border:2px solid var(--sun); color:#8B6A16; padding:2px 8px; border-radius:999px}
+.ex-b{padding:16px 17px}
+.wbank{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; padding:12px; background:var(--paper2); border:2px dashed var(--line); border-radius:12px}
+.wb{font-family:'Noto Serif SC',serif; font-size:17px; font-weight:600; background:#fff; border:2px solid var(--ging-lt); border-radius:9px; padding:5px 11px}
+.q{margin:12px 0; display:flex; gap:9px; align-items:flex-start; flex-wrap:wrap}
+.qn{flex:none; width:26px; height:26px; border-radius:8px; background:var(--ging-lt); color:var(--ging-ink); font-weight:900; font-size:13px; display:grid; place-items:center; margin-top:4px}
+.qt{flex:1; min-width:240px}
+.qt .zh{font-size:18px; font-weight:600; line-height:2}
+input.fill{
+  font-family:'Noto Serif SC',serif; font-size:17px; font-weight:600; width:110px; text-align:center;
+  border:none; border-bottom:2.5px solid var(--ging-dp); background:#F7FBFF; padding:2px 6px; color:var(--ink);
+  border-radius:6px 6px 0 0;
+}
+input.fill:focus{outline:none; background:var(--sun-pale); border-bottom-color:var(--tom)}
+input.fill.ok{background:var(--leaf-pale); border-bottom-color:var(--leaf); color:var(--leaf)}
+input.fill.no{background:var(--tom-pale); border-bottom-color:var(--tom); color:var(--tom)}
+input.fill.wide{width:190px}
+textarea.free{
+  width:100%; font-family:inherit; font-size:16px; border:2px solid var(--ging-lt); border-radius:12px;
+  padding:11px 13px; background:#F9FCFF; color:var(--ink); resize:vertical; min-height:74px; line-height:1.6;
+}
+textarea.free:focus{outline:none; border-color:var(--tom-lt); background:#fff}
+.opts{display:flex; flex-direction:column; gap:7px; margin-top:7px}
+.opt{
+  display:flex; gap:9px; align-items:flex-start; cursor:pointer; border:2px solid var(--line);
+  border-radius:11px; padding:8px 12px; background:var(--paper2); font-size:16px; transition:.13s;
+}
+.opt:hover{border-color:var(--ging-dp); background:#fff}
+.opt input{margin-top:5px; accent-color:var(--tom); flex:none}
+.opt.ok{border-color:var(--leaf); background:var(--leaf-pale)}
+.opt.no{border-color:var(--tom); background:var(--tom-pale)}
+.opt .zh{font-size:17px; font-weight:600}
+.btn{
+  font-family:inherit; font-weight:800; font-size:14.5px; cursor:pointer; border-radius:999px;
+  border:2px solid var(--tom); background:var(--tom); color:#fff; padding:9px 20px; transition:.15s;
+}
+.btn:hover{background:var(--tom-lt); border-color:var(--tom-lt)}
+.btn.gh{background:#fff; color:var(--tom)}
+.btn.gh:hover{background:var(--tom-pale)}
+.btn.bl{border-color:var(--ging-dp); background:var(--ging-dp)}
+.btn.bl:hover{background:var(--ging-ink); border-color:var(--ging-ink)}
+.btn.sm{font-size:13px; padding:6px 14px}
+.row{display:flex; gap:9px; flex-wrap:wrap; align-items:center; margin-top:14px}
+.res{font-weight:800; font-size:14.5px; padding:6px 0}
+.res.ok{color:var(--leaf)} .res.no{color:var(--tom)}
+.shot{
+  margin-top:14px; font-size:13.5px; font-weight:800; color:var(--tom); background:var(--tom-pale);
+  border:2px dashed var(--tom-lt); border-radius:11px; padding:9px 13px;
+}
+.reveal{margin-top:12px}
+.reveal-b{border:2px dashed var(--ging-dp); border-radius:12px; padding:14px 16px; background:#F2F7FC; margin-top:9px; display:none}
+.reveal-b.on{display:block}
+.reveal-b .zh{font-size:17px; line-height:1.95}
+details.script{margin-top:12px; border:2px solid var(--lav); border-radius:12px; background:var(--lav-pale); padding:0 16px}
+details.script summary{cursor:pointer; font-weight:800; color:#6E5EA0; padding:11px 0; font-size:14.5px}
+details.script .zh{font-size:17px; line-height:2}
+details.script[open]{padding-bottom:14px}
+.chipset{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0}
+.chipw{
+  font-family:'Noto Serif SC',serif; font-size:17px; font-weight:600; cursor:pointer;
+  background:#fff; border:2px solid var(--ging-lt); border-radius:10px; padding:6px 12px; transition:.13s;
+}
+.chipw:hover{border-color:var(--ging-dp)}
+.chipw.used{background:var(--leaf-pale); border-color:var(--leaf); color:var(--leaf)}
+.built{min-height:48px; border:2px dashed var(--ging-dp); border-radius:12px; padding:10px 12px; background:#F7FBFF;
+  font-family:'Noto Serif SC',serif; font-size:19px; font-weight:600; line-height:1.9}
+.matchgrid{display:grid; grid-template-columns:1fr 1fr; gap:9px}
+.mrow{display:contents}
+.mleft{font-family:'Noto Serif SC',serif; font-size:18px; font-weight:600; background:var(--ging-lt); border-radius:10px; padding:9px 12px; border:2px solid var(--ging-dp)}
+select.msel{font-family:inherit; font-size:15px; padding:9px 10px; border-radius:10px; border:2px solid var(--line); background:#fff; color:var(--ink); width:100%}
+select.msel:focus{outline:none; border-color:var(--tom-lt)}
+select.msel.ok{border-color:var(--leaf); background:var(--leaf-pale)}
+select.msel.no{border-color:var(--tom); background:var(--tom-pale)}
+.check-list{display:flex; flex-direction:column; gap:8px}
+.cl{display:flex; gap:9px; align-items:flex-start; font-size:15.5px}
+.cl input{margin-top:5px; accent-color:var(--leaf); flex:none; width:17px; height:17px}
+
+/* ---------- culture ---------- */
+.cult{background:linear-gradient(180deg,#FFF8F5,#FFFDF6); border-color:var(--tom-lt)}
+.cult .sec-n{background:var(--leaf)}
+.cgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:15px; margin-top:14px}
+.ccard{background:#fff; border:2px solid var(--tom-pale); border-radius:15px; padding:16px 17px}
+.ccard h4{margin:0 0 6px; color:var(--tom); font-size:16.5px}
+.ccard .zh{font-weight:700}
+.emoji{font-size:26px; display:block; margin-bottom:6px}
+
+/* ---------- vocab drawer ---------- */
+.ov{position:fixed; inset:0; background:rgba(51,71,91,.4); z-index:90; display:none}
+.ov.on{display:block}
+.drawer{
+  position:fixed; top:0; right:0; bottom:0; width:min(560px,100%); background:var(--paper); z-index:100;
+  transform:translateX(102%); transition:transform .28s ease; display:flex; flex-direction:column;
+  border-left:3px solid var(--ging-dp);
+}
+.drawer.on{transform:none}
+.dr-h{padding:15px 18px; border-bottom:2px solid var(--ging-lt); display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.dr-h h3{margin:0; font-size:19px; margin-right:auto}
+.dr-tools{padding:12px 18px; border-bottom:2px solid var(--line); display:flex; gap:8px; flex-wrap:wrap; background:var(--paper2)}
+input.search{
+  flex:1; min-width:170px; font-family:inherit; font-size:15px; padding:9px 13px; border-radius:999px;
+  border:2px solid var(--ging-lt); background:#fff; color:var(--ink);
+}
+input.search:focus{outline:none; border-color:var(--tom-lt)}
+.dr-body{flex:1; overflow:auto; padding:12px 18px 30px}
+.vcard{border:2px solid var(--line); border-radius:13px; padding:11px 13px; margin-bottom:9px; background:#fff; display:flex; gap:11px}
+.vcard.star{border-color:var(--sun); background:var(--sun-pale)}
+.vcard .m{flex:1; min-width:0}
+.vcard .h{font-family:'Noto Serif SC',serif; font-size:22px; font-weight:700}
+.vcard .p{font-family:'JetBrains Mono',monospace; font-size:13.5px; color:var(--ging-ink); font-weight:600}
+.vcard .r{font-size:15px; color:var(--ink2)}
+.vcard .e{font-family:'Noto Serif SC',serif; font-size:14px; color:var(--ink3); margin-top:3px}
+.count{font-size:13px; color:var(--ink3); font-weight:700; padding:0 18px 8px}
+
+/* flashcards */
+.fc-wrap{padding:16px 18px; display:none}
+.fc-wrap.on{display:block}
+.fc{
+  border:3px solid var(--ging-dp); border-radius:20px; background:#fff; min-height:230px;
+  display:grid; place-items:center; text-align:center; padding:26px 20px; cursor:pointer; margin-bottom:14px;
+}
+.fc .big{font-family:'Noto Serif SC',serif; font-size:56px; font-weight:700; line-height:1.25}
+.fc .bigru{font-size:26px; font-weight:800}
+.fc .bigpy{font-family:'JetBrains Mono',monospace; font-size:32px; font-weight:700; color:var(--ging-ink)}
+.fc .sub{margin-top:12px; color:var(--ink2); font-size:17px}
+.fc .hint{color:var(--ink3); font-size:13px; margin-top:14px; font-weight:700}
+.fc-bar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center}
+.fc-meta{text-align:center; font-size:13.5px; color:var(--ink3); font-weight:700; margin-bottom:10px}
+select.dir{font-family:inherit; font-size:14px; padding:8px 11px; border-radius:10px; border:2px solid var(--ging-dp); background:#fff; color:var(--ink)}
+
+/* ---------- self-check ---------- */
+.evalt{width:100%; border-collapse:collapse; font-size:15.5px; margin-top:12px}
+.evalt th{background:var(--lav-pale); color:#6E5EA0; font-size:12px; text-transform:uppercase; padding:8px; border:1px solid var(--line)}
+.evalt td{border:1px solid var(--line); padding:9px 10px}
+.evalt td.c{text-align:center; width:64px}
+.evalt input{accent-color:var(--lav); width:18px; height:18px}
+
+footer{
+  max-width:1080px; margin:0 auto; padding:26px 18px 46px; text-align:center; color:var(--ink3); font-size:13.5px;
+}
+.cr{border-top:2px dashed var(--line); padding-top:18px; font-weight:700}
+.cr b{color:var(--tom)}
+
+@media(max-width:640px){
+  body{font-size:16px}
+  section{padding:20px 16px}
+  .matchgrid{grid-template-columns:1fr}
+  .who{width:44px} .who i{width:38px;height:38px;font-size:14px}
+  .bub .zh{font-size:18px}
+  .fc .big{font-size:44px}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="petals"></div>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="brand-badge">🌼</div>
+      <div><div class="brand-s">新时代汉语口语 · 初级·上</div><div class="brand-t">你也是留学生吗？</div></div>
+    </div>
+    <div class="tbtns">
+      <button class="tgl" id="btn-py" onclick="tgl('py',this)">Пиньинь: вкл</button>
+      <button class="tgl" id="btn-tr" onclick="tgl('tr',this)">Перевод: вкл</button>
+      <button class="tgl tom" onclick="openDrawer()">📖 Словарь и карточки</button>
+    </div>
+  </div>
+  <div class="progress"><i></i></div>
+</header>
+
+<div class="chips"><a class="chip" href="#goals">Цели</a><a class="chip" href="#vocab">Лексика</a><a class="chip" href="#grammar">Грамматика</a><a class="chip" href="#text">Текст</a><a class="chip" href="#ex-main">Упражнения</a><a class="chip" href="#ex-ext">Расширение</a><a class="chip" href="#culture">Культура</a><a class="chip" href="#produce">Продукция</a><a class="chip" href="#eval">Самооценка</a></div>
+
+<main>
+<div class="hero"><div class="hero-k">第 1 课 · Урок 1</div><h1><span class="zh">你也是留学生吗？</span></h1><div class="hero-py">Nǐ yě shì liúxuéshēng ma?</div><h1 style="font-size:clamp(20px,3vw,27px);margin-top:6px">«Вы тоже иностранный студент?» — знакомство</h1><p class="hero-d">Первый день учёбы. Вы садитесь в университетский автобус — и рядом оказывается человек, с которым вам предстоит учиться целый год. Этот урок учит главному навыку первых недель в Китае: представить себя, узнать собеседника и красиво закончить разговор. Грамматика урока: конструкция 是……的, наречие 也, дополнение степени с 得, различие 以为 / 觉得 и местоимение 咱们.</p></div><section id="goals" class=""><h2><span class="sec-n">1</span>Цели урока · 学习目标</h2><p class="sec-sub">Что вы сможете делать после этого урока</p><div class="box blue"><div class="box-t">🎯 Результат</div><div class="check-list"><label class="cl"><input type="checkbox"><span>Понимать и употреблять лексику темы «自我介绍» — самопрезентация.</span></label><label class="cl"><input type="checkbox"><span>При первом знакомстве назвать имя, страну, факультет и статус.</span></label><label class="cl"><input type="checkbox"><span>Спросить собеседника о том же и отреагировать на ответ.</span></label><label class="cl"><input type="checkbox"><span>Использовать формулы начала и завершения разговора (开场白 / 结束语).</span></label><label class="cl"><input type="checkbox"><span>Понимать на слух короткий диалог знакомства и монолог-рассказ о себе.</span></label></div></div><div class="box sun"><div class="box-t">🔥 Разогрев · 驱动</div><p>Первый день семестра. В аудитории вы встретили нового однокурсника и хотите познакомиться. <b>Что вы скажете?</b> Запишите свой вариант <i>до</i> изучения урока — в конце сравните.</p><textarea class="free" rows="3" placeholder="你好！……"></textarea><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></section><section id="vocab" class=""><h2><span class="sec-n">2</span>Основная лексика · 词语表 1-1</h2><p class="sec-sub">10 ключевых слов урока. Нажмите ★, чтобы добавить слово в личный список для карточек</p><div class="vt-wrap"><table class="vt"><thead><tr><th></th><th>Слово</th><th>Пиньинь</th><th>Часть речи</th><th>Перевод</th><th>Сочетания и примеры</th></tr></thead><tbody><tr><td><button class="star" data-star="遇到" onclick="toggleStar('遇到',this)">★</button></td><td class="c-h zh">遇到</td><td class="c-p py">yùdào</td><td><span class="pos">гл</span></td><td>случайно встретить, столкнуться с</td><td class="c-e">遇到朋友 · 在商店遇到老师</td></tr><tr><td><button class="star" data-star="留学生" onclick="toggleStar('留学生',this)">★</button></td><td class="c-h zh">留学生</td><td class="c-p py">liúxuéshēng</td><td><span class="pos">сущ</span></td><td>студент, учащийся за границей; иностранный студент</td><td class="c-e">一个留学生 · 意大利留学生</td></tr><tr><td><button class="star" data-star="中文" onclick="toggleStar('中文',this)">★</button></td><td class="c-h zh">中文</td><td class="c-p py">Zhōngwén</td><td><span class="pos">сущ</span></td><td>китайский язык (особенно письменный)</td><td class="c-e">学习中文 · 中文课</td></tr><tr><td><button class="star" data-star="学院" onclick="toggleStar('学院',this)">★</button></td><td class="c-h zh">学院</td><td class="c-p py">xuéyuàn</td><td><span class="pos">сущ</span></td><td>институт, факультет (в составе университета)</td><td class="c-e">中文学院 · 旅游学院</td></tr><tr><td><button class="star" data-star="新生" onclick="toggleStar('新生',this)">★</button></td><td class="c-h zh">新生</td><td class="c-p py">xīnshēng</td><td><span class="pos">сущ</span></td><td>новый студент, первокурсник</td><td class="c-e">一个新生 · 我是新生。</td></tr><tr><td><button class="star" data-star="咱们" onclick="toggleStar('咱们',this)">★</button></td><td class="c-h zh">咱们</td><td class="c-p py">zánmen</td><td><span class="pos">мест</span></td><td>мы (с тобой / с вами — включая собеседника)</td><td class="c-e">咱们走吧！ · 咱们是同学。</td></tr><tr><td><button class="star" data-star="啊" onclick="toggleStar('啊',this)">★</button></td><td class="c-h zh">啊</td><td class="c-p py">à</td><td><span class="pos">межд</span></td><td>а!, ах! (внезапное понимание)</td><td class="c-e">啊……是这样。</td></tr><tr><td><button class="star" data-star="以为" onclick="toggleStar('以为',this)">★</button></td><td class="c-h zh">以为</td><td class="c-p py">yǐwéi</td><td><span class="pos">гл</span></td><td>полагать (ошибочно), думать (а на деле не так)</td><td class="c-e">我以为她是中国人。</td></tr><tr><td><button class="star" data-star="意大利" onclick="toggleStar('意大利',this)">★</button></td><td class="c-h zh">意大利</td><td class="c-p py">Yìdàlì</td><td><span class="pos">геогр</span></td><td>Италия</td><td class="c-e">意大利人 · 意大利菜</td></tr><tr><td><button class="star" data-star="法国" onclick="toggleStar('法国',this)">★</button></td><td class="c-h zh">法国</td><td class="c-p py">Fǎguó</td><td><span class="pos">геогр</span></td><td>Франция</td><td class="c-e">法国人 · 从法国来</td></tr></tbody></table></div><div class="box leaf"><div class="box-t">💡 Как читать таблицу</div><p>Последний столбец — это <b>сочетаемость</b> (搭配). Китайское слово почти никогда не учат в одиночку: «遇到» само по себе — просто «встретить», а вот <span class="zh">在商店遇到老师</span> <span class="py">zài shāngdiàn yùdào lǎoshī</span> «встретить учителя в магазине» — это уже готовая речевая заготовка. Учите правый столбец, а не левый.</p></div></section><section id="grammar" class=""><h2><span class="sec-n">3</span>Грамматика · 语言点</h2><p class="sec-sub">Семь конструкций урока — пошагово, со схемами и «живыми» примерами</p><div class="gp"><div class="gp-h"><b class="zh">是……的</b><span>конструкция выделения: откуда / когда / как / с кем произошло действие</span></div><div class="gp-b"><p>Когда факт уже известен обоим собеседникам, а уточнить нужно <b>обстоятельство</b> (откуда приехал, когда приехал, как приехал), китайский ставит это обстоятельство между 是 и 的.</p><div class="scheme"><span class="sl ">Подлежащее</span><span class="sl k">是</span><span class="sl v">обстоятельство (откуда/когда/как)</span><span class="sl ">глагол</span><span class="sl k">的</span></div><div class="ex"><span class="zh">我 <b>是</b> 从法国 来 <b>的</b>。</span><span class="py">Wǒ shì cóng Fǎguó lái de.</span><span class="tr">Я <b>приехала из Франции</b>. (не «еду», а «родом откуда»)</span></div><div class="ex"><span class="zh">我 <b>是</b> 去年 来中国 <b>的</b>。</span><span class="py">Wǒ shì qùnián lái Zhōngguó de.</span><span class="tr">Я приехал в Китай <b>в прошлом году</b>.</span></div><div class="ex"><span class="zh">我们 <b>是</b> 坐校车 来 <b>的</b>。</span><span class="py">Wǒmen shì zuò xiàochē lái de.</span><span class="tr">Мы приехали <b>на школьном автобусе</b>.</span></div><div class="warn"><b>Важно:</b> само действие уже совершилось и обоим известно. Сравните: <span class="zh">我来中国了。</span> <span class="py">Wǒ lái Zhōngguó le.</span> — сообщаю новость «я приехал в Китай». <span class="zh">我是去年来中国的。</span> — уточняю <i>когда именно</i>. Здесь <b>了 не ставится</b>.</div><div class="ex bad"><span class="zh">我是去年来中国<b>了</b>。</span><span class="tr">✗ так сказать нельзя</span></div><p class="ru">В разговорной речи 的 обязательно, а 是 часто опускают: <span class="zh">我从法国来的。</span> <span class="py">Wǒ cóng Fǎguó lái de.</span> — так говорят постоянно.</p></div></div><div class="gp"><div class="gp-h"><b class="zh">也</b><span>«тоже» — всегда перед глаголом, никогда в конце</span></div><div class="gp-b"><p>Русское «тоже» гуляет по предложению свободно. Китайское 也 — нет: оно стоит <b>строго перед глаголом или прилагательным-сказуемым</b>, после подлежащего.</p><div class="scheme"><span class="sl ">Подлежащее</span><span class="sl k">也</span><span class="sl v">глагол / прилагательное</span><span class="sl ">...</span></div><div class="ex"><span class="zh">你 <b>也</b> 是留学生吗？</span><span class="py">Nǐ yě shì liúxuéshēng ma?</span><span class="tr">Вы <b>тоже</b> иностранный студент?</span></div><div class="ex"><span class="zh">认识你我 <b>也</b> 很高兴！</span><span class="py">Rènshi nǐ wǒ yě hěn gāoxìng!</span><span class="tr">Мне <b>тоже</b> очень приятно познакомиться!</span></div><div class="ex"><span class="zh">她是法国人，<b>也</b> 是中文学院的新生。</span><span class="py">Tā shì Fǎguó rén, yě shì Zhōngwén Xuéyuàn de xīnshēng.</span><span class="tr">Она француженка и <b>также</b> первокурсница Института китайского языка.</span></div><div class="ex bad"><span class="zh">我是留学生也。</span><span class="tr">✗ так сказать нельзя</span></div><div class="ex bad"><span class="zh">也我是留学生。</span><span class="tr">✗ так сказать нельзя</span></div><div class="warn"><b>Ловушка для русскоговорящих:</b> в ответе «И я тоже» нельзя сказать просто «我也». Нужен глагол: <span class="zh">我也是。</span> <span class="py">Wǒ yě shì.</span></div></div></div><div class="gp"><div class="gp-h"><b class="zh">V + 得 + 形容词</b><span>дополнение степени: <i>как</i> человек делает что-то</span></div><div class="gp-b"><p>Чтобы оценить <b>качество регулярного действия</b> («хорошо говорит», «быстро бегает»), китайский ставит после глагола служебное 得 <span class="py">de</span> и затем прилагательное с 很/真/非常.</p><div class="scheme"><span class="sl ">глагол</span><span class="sl k">得</span><span class="sl o">很 / 真 / 非常</span><span class="sl v">прилагательное</span></div><div class="ex"><span class="zh">你汉语 说 <b>得</b> 真好！</span><span class="py">Nǐ Hànyǔ shuō de zhēn hǎo!</span><span class="tr">Вы <b>так хорошо говорите</b> по-китайски!</span></div><div class="ex"><span class="zh">小薇汉语说 <b>得</b> 非常好。</span><span class="py">Xiǎowēi Hànyǔ shuō de fēicháng hǎo.</span><span class="tr">Сяовэй говорит по-китайски превосходно.</span></div><h4>Если у глагола есть дополнение</h4><p>Дополнение (汉语) «мешает» 得 приклеиться к глаголу. Есть два законных выхода:</p><div class="scheme"><span class="sl ">他</span><span class="sl v">说</span><span class="sl o">汉语</span><span class="sl v">说</span><span class="sl k">得</span><span class="sl ">很好</span></div><div class="ex"><span class="zh">他说汉语说得很好。</span><span class="py">Tā shuō Hànyǔ shuō de hěn hǎo.</span><span class="tr">Он хорошо говорит по-китайски. <i>(повтор глагола)</i></span></div><div class="ex"><span class="zh">他汉语说得很好。</span><span class="py">Tā Hànyǔ shuō de hěn hǎo.</span><span class="tr">То же самое. <i>(дополнение вынесено вперёд — так говорят чаще)</i></span></div><div class="ex bad"><span class="zh">他说汉语得很好。</span><span class="tr">✗ так сказать нельзя</span></div><div class="warn"><b>Отрицание и вопрос</b> ставятся на прилагательное, а не на глагол:<br><span class="zh">他说得不好。</span> <span class="py">Tā shuō de bù hǎo.</span> — Он говорит плохо.<br><span class="zh">他说得怎么样？</span> <span class="py">Tā shuō de zěnmeyàng?</span> — Как он говорит?<br><span class="zh">他说得好不好？</span> <span class="py">Tā shuō de hǎo bu hǎo?</span> — Хорошо ли он говорит?</div></div></div><div class="gp"><div class="gp-h"><b class="zh">以为 vs 觉得 / 认为</b><span>«я думал» — но ошибался</span></div><div class="gp-b"><p>Все три переводятся «думать, считать», но 以为 несёт <b>обязательный оттенок ошибки</b>: я так думал, а на самом деле оказалось иначе.</p><div class="ex"><span class="zh">我 <b>以为</b> 她是中国人。</span><span class="py">Wǒ yǐwéi tā shì Zhōngguó rén.</span><span class="tr">Я <b>думал</b>, что она китаянка. <i>(а она — нет)</i></span></div><div class="ex"><span class="zh">我 <b>觉得</b> 汉语很有意思。</span><span class="py">Wǒ juéde Hànyǔ hěn yǒu yìsi.</span><span class="tr">Я <b>считаю</b>, что китайский интересный. <i>(моё мнение, ошибки нет)</i></span></div><div class="warn">Поэтому нельзя сказать «我以为汉语很有意思» о своём текущем мнении — это прозвучит как «я <i>ошибочно</i> считал китайский интересным».</div></div></div><div class="gp"><div class="gp-h"><b class="zh">咱们 vs 我们</b><span>два «мы»</span></div><div class="gp-b"><p>Различие живёт в разговорной речи, особенно на севере Китая.</p><div class="scheme"><span class="sl k">咱们</span><span class="sl ">=</span><span class="sl v">я + ты (вы)</span></div><div class="scheme"><span class="sl k2">我们</span><span class="sl ">=</span><span class="sl o">я + они (ты можешь не входить)</span></div><div class="ex"><span class="zh"><b>咱们</b> 是同学！</span><span class="py">Zánmen shì tóngxué!</span><span class="tr"><b>Мы с тобой</b> — однокурсники!</span></div><div class="ex"><span class="zh"><b>咱们</b> 加个微信吧。</span><span class="py">Zánmen jiā ge Wēixìn ba.</span><span class="tr"><b>Давай</b> добавим друг друга в WeChat.</span></div><div class="ex"><span class="zh"><b>我们</b> 是中文学院的，你们呢？</span><span class="py">Wǒmen shì Zhōngwén Xuéyuàn de, nǐmen ne?</span><span class="tr"><b>Мы</b> из Института китайского языка, а вы?</span></div><p class="ru">咱们 звучит теплее и ближе — именно поэтому Ма Боло говорит «咱们是同学», а не «我们是同学».</p></div></div><div class="gp"><div class="gp-h"><b class="zh">因为……，所以……</b><span>причина и следствие</span></div><div class="gp-b"><p>В отличие от русского, в китайском можно оставить <b>оба</b> союза — это не ошибка, а норма.</p><div class="scheme"><span class="sl k">因为</span><span class="sl v">причина</span><span class="sl ">，</span><span class="sl k">所以</span><span class="sl o">следствие</span></div><div class="ex"><span class="zh"><b>因为</b> 我妈妈是中国人（，<b>所以</b> 我汉语说得好）。</span><span class="py">Yīnwèi wǒ māma shì Zhōngguó rén, suǒyǐ wǒ Hànyǔ shuō de hǎo.</span><span class="tr">Моя мама китаянка, поэтому я хорошо говорю по-китайски.</span></div><div class="ex"><span class="zh">她妈妈是中国人，<b>所以</b> 她汉语说得好。</span><span class="py">Tā māma shì Zhōngguó rén, suǒyǐ tā Hànyǔ shuō de hǎo.</span><span class="tr">Её мама китаянка, поэтому она хорошо говорит по-китайски.</span></div><div class="warn">При ответе на вопрос 为什么 достаточно одного 因为: <span class="zh">—你为什么学汉语？—因为我喜欢中国文化。</span></div></div></div><div class="gp"><div class="gp-h"><b class="zh">……的……</b><span>определение с 的</span></div><div class="gp-b"><p>Всё, что описывает существительное, ставится <b>перед</b> ним и цепляется через 的. Порядок — зеркальный русскому: сначала самое общее, потом самое конкретное.</p><div class="scheme"><span class="sl v">中文学院</span><span class="sl k">的</span><span class="sl o">新生</span></div><div class="ex"><span class="zh">中文学院<b>的</b>新生</span><span class="py">Zhōngwén Xuéyuàn de xīnshēng</span><span class="tr">первокурсник Института китайского языка</span></div><div class="ex"><span class="zh">我<b>的</b>室友</span><span class="py">wǒ de shìyǒu</span><span class="tr">мой сосед по комнате</span></div><p class="ru">Когда речь о родстве и близких людях, 的 часто опускается: <span class="zh">我妈妈</span>, <span class="zh">我同学</span> — но <span class="zh">我的室友</span> с 的 звучит естественнее.</p></div></div></section><section id="text" class=""><h2><span class="sec-n">4</span>Текст · 课文</h2><p class="sec-sub">Диалог (一) и монолог (二). Читайте вслух, следя за интонацией</p><h3>课文（一）· Диалог</h3><div class="stage">（在校车上，马波罗遇到了张小薇。）Zài xiàochē shang, Mǎ Bōluó yùdào le Zhāng Xiǎowēi. — В университетском автобусе Ма Боло встретил Чжан Сяовэй.</div><div class="dlg"><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">请问，这儿有人吗？</div><div class="py-line">Qǐngwèn, zhèr yǒu rén ma?</div><div class="tr-line">Простите, здесь занято? <i>(букв. «здесь есть человек?»)</i></div></div></div><div class="turn r"><div class="who"><i>张</i>小</div><div class="bub"><div class="zh">没有，你坐吧。</div><div class="py-line">Méiyǒu, nǐ zuò ba.</div><div class="tr-line">Нет, садитесь.</div></div></div><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">你好！我叫马波罗，是意大利人。你叫什么名字？</div><div class="py-line">Nǐ hǎo! Wǒ jiào Mǎ Bōluó, shì Yìdàlì rén. Nǐ jiào shénme míngzi?</div><div class="tr-line">Здравствуйте! Меня зовут Ма Боло, я итальянец. Как вас зовут?</div></div></div><div class="turn r"><div class="who"><i>张</i>小</div><div class="bub"><div class="zh">我叫张小薇。</div><div class="py-line">Wǒ jiào Zhāng Xiǎowēi.</div><div class="tr-line">Меня зовут Чжан Сяовэй.</div></div></div><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">你也是留学生吗？</div><div class="py-line">Nǐ yě shì liúxuéshēng ma?</div><div class="tr-line">Вы тоже иностранная студентка?</div></div></div><div class="turn r"><div class="who"><i>张</i>小</div><div class="bub"><div class="zh">对，我是从法国来的，是中文学院的新生。</div><div class="py-line">Duì, wǒ shì cóng Fǎguó lái de, shì Zhōngwén Xuéyuàn de xīnshēng.</div><div class="tr-line">Да, я приехала из Франции, первокурсница Института китайского языка.</div></div></div><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">我也是，咱们是同学！认识你很高兴！</div><div class="py-line">Wǒ yě shì, zánmen shì tóngxué! Rènshi nǐ hěn gāoxìng!</div><div class="tr-line">Я тоже! Значит, мы однокурсники! Очень приятно познакомиться!</div></div></div><div class="turn r"><div class="who"><i>张</i>小</div><div class="bub"><div class="zh">认识你我也很高兴！</div><div class="py-line">Rènshi nǐ wǒ yě hěn gāoxìng!</div><div class="tr-line">Мне тоже очень приятно!</div></div></div><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">你汉语说得真好！</div><div class="py-line">Nǐ Hànyǔ shuō de zhēn hǎo!</div><div class="tr-line">Вы так хорошо говорите по-китайски!</div></div></div><div class="turn r"><div class="who"><i>张</i>小</div><div class="bub"><div class="zh">谢谢，因为我妈妈是中国人。</div><div class="py-line">Xièxie, yīnwèi wǒ māma shì Zhōngguó rén.</div><div class="tr-line">Спасибо, это потому что моя мама китаянка.</div></div></div><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">啊……是这样。</div><div class="py-line">À…… shì zhèyàng.</div><div class="tr-line">А-а… вот оно что.</div></div></div></div><div class="box tom"><div class="box-t">🗣 Живая речь</div><p><span class="zh">请问，这儿有人吗？</span> — стандартный способ спросить «здесь свободно?». Дословно «здесь есть человек?». Ответ <span class="zh">没有，你坐吧。</span> — «нет, садитесь».</p><p><span class="zh">啊……是这样。</span> — «А-а, вот оно что». Одна из самых частых реакций в живом разговоре: показывает, что вы поняли причину. Обратите внимание: 啊 здесь читается <b>четвёртым тоном</b> — à.</p><p><span class="zh">认识你很高兴！</span> — формула «приятно познакомиться». Более формальный вариант — <span class="zh">很高兴认识你。</span> Совсем официальный (на визитке, на приёме) — <span class="zh">幸会</span> <span class="py">xìnghuì</span>.</p></div><h3>课文（二）· Рассказ Ма Боло</h3><div class="text-block"><div class="zh">今天我在校车上遇到了一个留学生。她叫张小薇，是法国人，也是中文学院的新生。小薇汉语说得非常好，我以为她是中国人。小薇告诉我，她妈妈是中国人，所以她汉语说得好。</div><div class="py-line">Jīntiān wǒ zài xiàochē shang yùdào le yí ge liúxuéshēng. Tā jiào Zhāng Xiǎowēi, shì Fǎguó rén, yě shì Zhōngwén Xuéyuàn de xīnshēng. Xiǎowēi Hànyǔ shuō de fēicháng hǎo, wǒ yǐwéi tā shì Zhōngguó rén. Xiǎowēi gàosu wǒ, tā māma shì Zhōngguó rén, suǒyǐ tā Hànyǔ shuō de hǎo.</div><div class="tr-line">Сегодня в университетском автобусе я встретил иностранную студентку. Её зовут Чжан Сяовэй, она француженка и тоже первокурсница Института китайского языка. Сяовэй прекрасно говорит по-китайски, я подумал, что она китаянка. Сяовэй рассказала мне, что её мама — китаянка, поэтому она так хорошо говорит по-китайски.</div></div></section><section id="ex-main" class=""><h2><span class="sec-n">5</span>Упражнения к тексту · 练习</h2><p class="sec-sub">Все задания учебника + дополнительная тренировка</p><div class="ex-card" id="ex1"><div class="ex-h"><span class="ex-tag">Лексика</span><b>1. 词语练习：соедините слово и перевод</b></div><div class="ex-b"><div class="matchgrid"><div class="mleft">遇到</div><select class="msel" data-a="случайно встретить"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select><div class="mleft">留学生</div><select class="msel" data-a="иностранный студент"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select><div class="mleft">学院</div><select class="msel" data-a="институт, факультет"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select><div class="mleft">新生</div><select class="msel" data-a="новый студент"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select><div class="mleft">咱们</div><select class="msel" data-a="мы (с тобой)"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select><div class="mleft">以为</div><select class="msel" data-a="полагать (ошибочно)"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select><div class="mleft">意大利</div><select class="msel" data-a="Италия"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select><div class="mleft">法国</div><select class="msel" data-a="Франция"><option value="— выберите —">— выберите —</option><option value="случайно встретить">случайно встретить</option><option value="иностранный студент">иностранный студент</option><option value="институт, факультет">институт, факультет</option><option value="новый студент">новый студент</option><option value="мы (с тобой)">мы (с тобой)</option><option value="полагать (ошибочно)">полагать (ошибочно)</option><option value="Италия">Италия</option><option value="Франция">Франция</option><option value="сосед по комнате">сосед по комнате</option><option value="WeChat">WeChat</option></select></div><div class="row"><button class="btn" onclick="checkSel('ex1')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex1')">Сбросить</button><span class="res"></span></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex2"><div class="ex-h"><span class="ex-tag">Лексика</span><b>2. 选词填空：вставьте подходящее слово</b></div><div class="ex-b"><div class="wbank"><span class="wb zh">新生</span><span class="wb zh">遇到</span><span class="wb zh">咱们</span></div><div class="q"><span class="qn">1</span><div class="qt"><span class="zh">我一出门就<input class="fill " data-a="遇到" autocomplete="off">中文老师了。</span></div></div><p class="py" style="margin:-8px 0 12px 35px">Wǒ yì chūmén jiù ______ Zhōngwén lǎoshī le. — Только вышел за дверь — и сразу встретил учителя китайского.</p><div class="q"><span class="qn">2</span><div class="qt"><span class="zh">今天下课后<input class="fill " data-a="咱们" autocomplete="off">一起去看电影吧。</span></div></div><p class="py" style="margin:-8px 0 12px 35px">Jīntiān xiàkè hòu ______ yìqǐ qù kàn diànyǐng ba. — Давай после занятий вместе сходим в кино.</p><div class="q"><span class="qn">3</span><div class="qt"><span class="zh">他是<input class="fill " data-a="新生" autocomplete="off">，不知道图书馆在哪儿。</span></div></div><p class="py" style="margin:-8px 0 12px 35px">Tā shì ______, bù zhīdào túshūguǎn zài nǎr. — Он новичок, не знает, где библиотека.</p><div class="row"><button class="btn" onclick="checkFill('ex2')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex2')">Сбросить</button><span class="res"></span></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex3"><div class="ex-h"><span class="ex-tag">Аудирование</span><b>3. 听录音，填空：аудирование с пропусками</b></div><div class="ex-b"><p class="ru">Прослушайте запись <b>1-2</b> два раза и заполните пропуски. Если аудио нет под рукой — восстановите текст по логике диалога, затем сверьтесь со скриптом.</p><div class="q"><span class="qn">张</span><div class="qt"><span class="zh">我叫张小薇，是从<input class="fill" data-a="法国" autocomplete="off">来的。我是<input class="fill wide" data-a="中文学院|中文学院的" autocomplete="off">的新生。认识你<input class="fill wide" data-a="很高兴" autocomplete="off">！</span></div></div><div class="q"><span class="qn">马</span><div class="qt"><span class="zh">我叫马波罗，是<input class="fill" data-a="意大利" autocomplete="off">人。我也是<input class="fill wide" data-a="留学生|新生|中文学院的新生" autocomplete="off">。认识你<input class="fill wide" data-a="我也很高兴|很高兴" autocomplete="off">！</span></div></div><div class="row"><button class="btn" onclick="checkFill('ex3')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex3')">Сбросить</button><span class="res"></span></div><details class="script"><summary>🎧 Скрипт аудио / ключ — 1-2</summary><div class="zh">张小薇：我叫张小薇，是从<b>法国</b>来的。我是<b>中文学院</b>的新生。认识你<b>很高兴</b>！<br>马波罗：我叫马波罗，是<b>意大利</b>人。我也是<b>留学生</b>。认识你<b>我也很高兴</b>！</div><div class="tr-line ru" style="margin-top:10px">Чжан Сяовэй: Меня зовут Чжан Сяовэй, я приехала из Франции. Я первокурсница Института китайского языка. Приятно познакомиться! / Ма Боло: Меня зовут Ма Боло, я итальянец. Я тоже иностранный студент. Мне тоже очень приятно!</div></details><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex4"><div class="ex-h"><span class="ex-tag">Говорение</span><b>4. 根据课文回答问题：ответьте на вопросы по диалогу</b></div><div class="ex-b"><div class="q"><span class="qn">1</span><div class="qt"><span class="zh">马波罗在校车上<b>遇到</b>谁了？</span><br><span class="py">Mǎ Bōluó zài xiàochē shang yùdào shéi le?</span> <span class="tr ru">— Кого Ма Боло встретил в автобусе?</span><textarea class="free" rows="2" placeholder="Ваш ответ по-китайски…"></textarea><div class="reveal"><button class="btn gh sm" onclick="toggleReveal('r1',this)">Показать образец</button><div class="reveal-b" id="r1"><span class="zh">他在校车上遇到了张小薇，一个中文学院的新生。</span><br><span class="py">Tā zài xiàochē shang yùdào le Zhāng Xiǎowēi, yí ge Zhōngwén Xuéyuàn de xīnshēng.</span></div></div></div></div><div class="q"><span class="qn">2</span><div class="qt"><span class="zh">张小薇是<b>留学生</b>吗？</span><br><span class="py">Zhāng Xiǎowēi shì liúxuéshēng ma?</span> <span class="tr ru">— Чжан Сяовэй — иностранная студентка?</span><textarea class="free" rows="2" placeholder="Ваш ответ по-китайски…"></textarea><div class="reveal"><button class="btn gh sm" onclick="toggleReveal('r2',this)">Показать образец</button><div class="reveal-b" id="r2"><span class="zh">是，她是留学生，是从法国来的，是中文学院的新生。</span><br><span class="py">Shì, tā shì liúxuéshēng, shì cóng Fǎguó lái de, shì Zhōngwén Xuéyuàn de xīnshēng.</span></div></div></div></div><div class="q"><span class="qn">3</span><div class="qt"><span class="zh">为什么张小薇是中文学院的新生，但是汉语<b>说得</b>很好？</span><br><span class="py">Wèi shénme Zhāng Xiǎowēi shì Zhōngwén Xuéyuàn de xīnshēng, dànshì Hànyǔ shuō de hěn hǎo?</span> <span class="tr ru">— Почему она первокурсница, но говорит так хорошо?</span><textarea class="free" rows="2" placeholder="Ваш ответ по-китайски…"></textarea><div class="reveal"><button class="btn gh sm" onclick="toggleReveal('r3',this)">Показать образец</button><div class="reveal-b" id="r3"><span class="zh">因为她妈妈是中国人，所以她汉语说得很好。</span><br><span class="py">Yīnwèi tā māma shì Zhōngguó rén, suǒyǐ tā Hànyǔ shuō de hěn hǎo.</span></div></div></div></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex5"><div class="ex-h"><span class="ex-tag">Пересказ</span><b>5. 填一填，说一说：восстановите и перескажите текст (二)</b></div><div class="ex-b"><p class="ru">Восстановите рассказ Ма Боло, затем перескажите его вслух, не подглядывая.</p><div class="text-block"><div class="zh" style="line-height:2.4">马波罗在校车上<input class="fill" data-a="遇到" autocomplete="off">了一个留学生。她叫<input class="fill wide" data-a="张小薇" autocomplete="off">，是<input class="fill wide" data-a="法国人" autocomplete="off">，也是<input class="fill wide" data-a="中文学院" autocomplete="off">的<input class="fill" data-a="新生" autocomplete="off">。张小薇汉语<input class="fill wide" data-a="说得很好|说得非常好|说得好" autocomplete="off">，因为<input class="fill wide" data-a="她妈妈是中国人|妈妈是中国人" autocomplete="off">。</div></div><div class="row"><button class="btn" onclick="checkFill('ex5')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex5')">Сбросить</button><span class="res"></span></div><h4>Мини-словарь для пересказа · 小词库</h4><div class="wbank"><span class="wb zh">校车</span><span class="wb zh">遇到</span><span class="wb zh">留学生</span><span class="wb zh">法国</span><span class="wb zh">中文</span><span class="wb zh">学院</span><span class="wb zh">新生</span><span class="wb zh">以为</span></div><p class="ru">Отметьте галочкой те слова, которые вы использовали в своём пересказе:</p><div class="check-list"><label class="cl"><input type="checkbox"><span>校车 xiàochē</span></label><label class="cl"><input type="checkbox"><span>遇到 yùdào</span></label><label class="cl"><input type="checkbox"><span>留学生 liúxuéshēng</span></label><label class="cl"><input type="checkbox"><span>法国 Fǎguó</span></label><label class="cl"><input type="checkbox"><span>中文 Zhōngwén</span></label><label class="cl"><input type="checkbox"><span>学院 xuéyuàn</span></label><label class="cl"><input type="checkbox"><span>新生 xīnshēng</span></label><label class="cl"><input type="checkbox"><span>以为 yǐwéi</span></label></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex6"><div class="ex-h"><span class="ex-tag">Синтаксис</span><b>6. 组句：соберите предложение</b></div><div class="ex-b"><p class="ru">Соберите фразу из блоков. Нажмите на блок, чтобы поставить его в предложение; нажмите ещё раз — чтобы убрать.</p><h4>1. «Я приехал из России, я первокурсник Института туризма.»</h4><div class="chipset"><span class="chipw" onclick="pickChip(this,'as1')">是</span><span class="chipw" onclick="pickChip(this,'as1')">我</span><span class="chipw" onclick="pickChip(this,'as1')">从俄罗斯</span><span class="chipw" onclick="pickChip(this,'as1')">来的</span><span class="chipw" onclick="pickChip(this,'as1')">，</span><span class="chipw" onclick="pickChip(this,'as1')">是旅游学院的新生</span><span class="chipw" onclick="pickChip(this,'as1')">。</span></div><div class="built" id="as1" data-a="我是从俄罗斯来的，是旅游学院的新生。"></div><div class="row"><button class="btn bl sm" onclick="checkAssemble('ex6','as1')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex6')">Сбросить</button><span class="res"></span></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div></section><section id="ex-ext" class=""><h2><span class="sec-n">6</span>Расширение · 促成—拓展</h2><p class="sec-sub">Дополнительная лексика 词语表 1-4 и задания на аудирование</p><div class="vt-wrap"><table class="vt"><thead><tr><th></th><th>Слово</th><th>Пиньинь</th><th>Часть речи</th><th>Перевод</th><th>Сочетания и примеры</th></tr></thead><tbody><tr><td><button class="star" data-star="室友" onclick="toggleStar('室友',this)">★</button></td><td class="c-h zh">室友</td><td class="c-p py">shìyǒu</td><td><span class="pos">сущ</span></td><td>сосед по комнате</td><td class="c-e">我的室友 · 三个室友</td></tr><tr><td><button class="star" data-star="见面" onclick="toggleStar('见面',this)">★</button></td><td class="c-h zh">见面</td><td class="c-p py">jiànmiàn</td><td><span class="pos">гл</span></td><td>встретиться, увидеться</td><td class="c-e">和朋友见面 · 第一次见面 · 见过面</td></tr><tr><td><button class="star" data-star="加" onclick="toggleStar('加',this)">★</button></td><td class="c-h zh">加</td><td class="c-p py">jiā</td><td><span class="pos">гл</span></td><td>добавить; добавить в контакты</td><td class="c-e">加一下我的微信 · 加个好友</td></tr><tr><td><button class="star" data-star="微信" onclick="toggleStar('微信',this)">★</button></td><td class="c-h zh">微信</td><td class="c-p py">Wēixìn</td><td><span class="pos">сущ</span></td><td>WeChat (китайский мессенджер)</td><td class="c-e">加微信 · 发微信</td></tr><tr><td><button class="star" data-star="俄罗斯" onclick="toggleStar('俄罗斯',this)">★</button></td><td class="c-h zh">俄罗斯</td><td class="c-p py">Éluósī</td><td><span class="pos">геогр</span></td><td>Россия</td><td class="c-e">俄罗斯人 · 从俄罗斯来</td></tr></tbody></table></div><h3>Дополнительная лексика для заданий · 补充词语</h3><div class="vt-wrap"><table class="vt"><thead><tr><th></th><th>Слово</th><th>Пиньинь</th><th>Часть речи</th><th>Перевод</th><th>Сочетания и примеры</th></tr></thead><tbody><tr><td><button class="star" data-star="校车" onclick="toggleStar('校车',this)">★</button></td><td class="c-h zh">校车</td><td class="c-p py">xiàochē</td><td><span class="pos">сущ</span></td><td>школьный / университетский автобус</td><td class="c-e">坐校车 · 在校车上</td></tr><tr><td><button class="star" data-star="介绍" onclick="toggleStar('介绍',this)">★</button></td><td class="c-h zh">介绍</td><td class="c-p py">jièshào</td><td><span class="pos">гл</span></td><td>знакомить, представлять; рассказывать о</td><td class="c-e">我介绍一下 · 介绍我的室友</td></tr><tr><td><button class="star" data-star="同学" onclick="toggleStar('同学',this)">★</button></td><td class="c-h zh">同学</td><td class="c-p py">tóngxué</td><td><span class="pos">сущ</span></td><td>одногруппник, соученик</td><td class="c-e">我的同学 · 同学们</td></tr><tr><td><button class="star" data-star="认识" onclick="toggleStar('认识',this)">★</button></td><td class="c-h zh">认识</td><td class="c-p py">rènshi</td><td><span class="pos">гл</span></td><td>познакомиться, быть знакомым; знать (человека, иероглиф)</td><td class="c-e">认识你很高兴 · 认识这个字</td></tr><tr><td><button class="star" data-star="告诉" onclick="toggleStar('告诉',this)">★</button></td><td class="c-h zh">告诉</td><td class="c-p py">gàosu</td><td><span class="pos">гл</span></td><td>сказать (кому-то), сообщить</td><td class="c-e">告诉我 · 他告诉我一件事</td></tr><tr><td><button class="star" data-star="交换生" onclick="toggleStar('交换生',this)">★</button></td><td class="c-h zh">交换生</td><td class="c-p py">jiāohuànshēng</td><td><span class="pos">сущ</span></td><td>студент по обмену</td><td class="c-e">一个交换生</td></tr><tr><td><button class="star" data-star="专业" onclick="toggleStar('专业',this)">★</button></td><td class="c-h zh">专业</td><td class="c-p py">zhuānyè</td><td><span class="pos">сущ</span></td><td>специальность, направление обучения</td><td class="c-e">我的专业是中文。</td></tr><tr><td><button class="star" data-star="爱好" onclick="toggleStar('爱好',this)">★</button></td><td class="c-h zh">爱好</td><td class="c-p py">àihào</td><td><span class="pos">сущ</span></td><td>увлечение, хобби</td><td class="c-e">我的爱好是唱歌。</td></tr><tr><td><button class="star" data-star="以后" onclick="toggleStar('以后',this)">★</button></td><td class="c-h zh">以后</td><td class="c-p py">yǐhòu</td><td><span class="pos">сущ</span></td><td>потом, впоследствии, после</td><td class="c-e">以后一起吃饭 · 下课以后</td></tr><tr><td><button class="star" data-star="下次" onclick="toggleStar('下次',this)">★</button></td><td class="c-h zh">下次</td><td class="c-p py">xiàcì</td><td><span class="pos">сущ</span></td><td>в следующий раз</td><td class="c-e">下次见 · 下次一起去</td></tr></tbody></table></div><div class="ex-card" id="ex7"><div class="ex-h"><span class="ex-tag">Аудирование</span><b>7. 认识一下：заполните карточку знакомства (аудио 1-5-1)</b></div><div class="ex-b"><p class="ru">Диалог <b>1-5-1</b>. Чжан Сяовэй и Хуан Цяньюй — соседки по комнате, они видятся впервые. Заполните карточку знакомства.</p><div class="q"><span class="qn">1</span><div class="qt"><b>Начало разговора:</b> <span class="zh">你好！<input class="fill wide" data-a="认识一下" autocomplete="off">。</span></div></div><div class="q"><span class="qn">2</span><div class="qt"><b>Страна Сяовэй:</b> <span class="zh">我是从<input class="fill" data-a="法国" autocomplete="off">来的。</span></div></div><div class="q"><span class="qn">3</span><div class="qt"><b>Страна Цяньюй:</b> <span class="zh">我是<input class="fill wide" data-a="俄罗斯人" autocomplete="off">。</span></div></div><div class="q"><span class="qn">4</span><div class="qt"><b>Факультет Цяньюй:</b> <span class="zh">我是<input class="fill wide" data-a="旅游学院|旅游学院的" autocomplete="off">的。</span></div></div><div class="q"><span class="qn">5</span><div class="qt"><b>Статус Цяньюй:</b> <span class="zh">我不是新生，我已经在这儿学习<input class="fill wide" data-a="半年了|半年" autocomplete="off">。</span></div></div><div class="q"><span class="qn">6</span><div class="qt"><b>Конец разговора:</b> <span class="zh">咱们<input class="fill wide" data-a="加个微信吧|加个微信" autocomplete="off">。</span></div></div><div class="row"><button class="btn" onclick="checkFill('ex7')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex7')">Сбросить</button><span class="res"></span></div><details class="script"><summary>🎧 Скрипт аудио / ключ — 1-5-1</summary><div class="zh">张小薇：你好！认识一下。我是张小薇，从法国来的，你呢？<br>黄千语：你好！我叫黄千语，是俄罗斯人。<br>张小薇：你也是中文学院的新生吗？<br>黄千语：不是，我是旅游学院的，已经在这儿学习半年了。<br>张小薇：太好了！我有问题可以问你吗？<br>黄千语：没问题。咱们加个微信吧。</div><div class="tr-line ru" style="margin-top:10px">— Здравствуй! Давай познакомимся. Я Чжан Сяовэй, приехала из Франции, а ты? — Привет! Меня зовут Хуан Цяньюй, я из России. — Ты тоже первокурсница Института китайского языка? — Нет, я из Института туризма, учусь здесь уже полгода. — Отлично! Можно будет задавать тебе вопросы? — Без проблем. Давай добавим друг друга в WeChat.</div></details><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex8"><div class="ex-h"><span class="ex-tag">Аудирование</span><b>8. 补全短文：восстановите монолог (аудио 1-5-2)</b></div><div class="ex-b"><p class="ru">Монолог <b>1-5-2</b>. Хуан Цяньюй рассказывает о себе. Восстановите текст.</p><div class="text-block"><div class="zh" style="line-height:2.5">我叫黄千语，“千”是“一千”“两千”的“<input class="fill" data-a="千" autocomplete="off">”，“语”是“汉语”的“<input class="fill" data-a="语" autocomplete="off">”。我非常喜欢<input class="fill wide" data-a="说话" autocomplete="off">，所以老师给我起了这个名字。我是张小薇的<input class="fill" data-a="室友" autocomplete="off">，是<input class="fill wide" data-a="俄罗斯" autocomplete="off">人。今天我和小薇在学校里遇到了马波罗。他是小薇的<input class="fill" data-a="同学" autocomplete="off">，也是中文学院的<input class="fill" data-a="新生" autocomplete="off">。小薇介绍我们认识。认识他我很<input class="fill" data-a="高兴" autocomplete="off">。有时间我想和他一起<input class="fill wide" data-a="喝咖啡" autocomplete="off">。</div></div><div class="row"><button class="btn" onclick="checkFill('ex8')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex8')">Сбросить</button><span class="res"></span></div><details class="script"><summary>🎧 Скрипт аудио / ключ — 1-5-2</summary><div class="zh">我叫黄千语，“千”是“一千”“两千”的“千”，“语”是“汉语”的“语”。我非常喜欢说话，所以老师给我起了这个名字。我是张小薇的室友，是俄罗斯人。今天我和小薇在学校里遇到了马波罗。他是小薇的同学，也是中文学院的新生。小薇介绍我们认识。认识他我很高兴。有时间我想和他一起喝咖啡。</div><div class="tr-line ru" style="margin-top:10px">Меня зовут Хуан Цяньюй. «Цянь» — это «цянь» из слов «одна тысяча», «две тысячи», «юй» — это «юй» из слова «китайский язык». Я очень люблю говорить, поэтому учитель дал мне такое имя. Я соседка Чжан Сяовэй по комнате, я из России. Сегодня мы с Сяовэй встретили в университете Ма Боло. Он её однокурсник и тоже первокурсник Института китайского языка. Сяовэй нас познакомила. Мне было очень приятно с ним познакомиться. Будет время — хочу сходить с ним выпить кофе.</div></details><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex9"><div class="ex-h"><span class="ex-tag">Говорение</span><b>9. 角色扮演：ролевая игра «Сяовэй знакомит друзей»</b></div><div class="ex-b"><p class="ru">Заполните пропуски и разыграйте диалог втроём.</p><div class="dlg"><div class="turn r"><div class="who"><i>张</i>小</div><div class="bub"><div class="zh">马波罗，你去哪儿啊？</div><div class="py-line">Mǎ Bōluó, nǐ qù nǎr a?</div><div class="tr-line">Ма Боло, ты куда?</div></div></div><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">你好啊，小薇。我去图书馆。这是？</div><div class="py-line">Nǐ hǎo a, Xiǎowēi. Wǒ qù túshūguǎn. Zhè shì?</div><div class="tr-line">Привет, Сяовэй. Я в библиотеку. А это?</div></div></div></div><div class="q"><span class="qn">张</span><div class="qt"><span class="zh">我给你们介绍一下。这是我的<input class="fill" data-a="室友" autocomplete="off">，黄千语。她是<input class="fill" data-a="从" autocomplete="off">俄罗斯来的。这是我<input class="fill wide" data-a="同学|的同学" autocomplete="off">，马波罗。他是<input class="fill wide" data-a="中文|中文学院" autocomplete="off">学院的<input class="fill" data-a="新生" autocomplete="off">。</span></div></div><div class="dlg"><div class="turn r"><div class="who"><i>黄</i>千</div><div class="bub"><div class="zh">你好，波罗！</div><div class="py-line">Nǐ hǎo, Bōluó!</div><div class="tr-line">Привет, Боло!</div></div></div><div class="turn"><div class="who"><i>马</i>波</div><div class="bub"><div class="zh">你好，千语！你的名字真好听。是哪两个汉字？</div><div class="py-line">Nǐ hǎo, Qiānyǔ! Nǐ de míngzi zhēn hǎotīng. Shì nǎ liǎng ge Hànzì?</div><div class="tr-line">Привет, Цяньюй! У тебя красивое имя. Какие два иероглифа?</div></div></div></div><div class="q"><span class="qn">黄</span><div class="qt"><span class="zh"><input class="fill wide" data-a="一千的千|“一千”的“千”|一千两千的千" autocomplete="off">，<input class="fill wide" data-a="汉语的语|“汉语”的“语”" autocomplete="off">。因为<input class="fill wide" data-a="我非常喜欢说话|我很喜欢说话|我喜欢说话" autocomplete="off">，所以老师给我起了这个名字。</span></div></div><div class="q"><span class="qn">马</span><div class="qt"><span class="zh">认识你<input class="fill wide" data-a="很高兴" autocomplete="off">！有时间<input class="fill wide" data-a="咱们一起喝咖啡吧|一起喝咖啡吧|咱们一起喝咖啡" autocomplete="off">。</span></div></div><div class="row"><button class="btn" onclick="checkFill('ex9')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex9')">Сбросить</button><span class="res"></span></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="ex10"><div class="ex-h"><span class="ex-tag">Структура</span><b>10. 成段表达：структура разговора</b></div><div class="ex-b"><p class="ru">Разложите фразы по трём блокам структуры разговора при знакомстве.</p><div class="matchgrid"><div class="mleft">A. 你好！认识一下。</div><select class="msel" data-a="开场白 · начало"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">B. 认识你很高兴！</div><select class="msel" data-a="结束语 · конец"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">C. 我是……</div><select class="msel" data-a="个人情况 · о себе"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">D. 咱们加个微信吧。</div><select class="msel" data-a="结束语 · конец"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">E. 我给你们介绍一下。</div><select class="msel" data-a="开场白 · начало"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">F. 我是从……来的。</div><select class="msel" data-a="个人情况 · о себе"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">G. 我叫……</div><select class="msel" data-a="个人情况 · о себе"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">H. 有时间咱们一起……吧。</div><select class="msel" data-a="结束语 · конец"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">I. 我是……学院的……</div><select class="msel" data-a="个人情况 · о себе"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select><div class="mleft">J. 这是……，我的……</div><select class="msel" data-a="个人情况 · о себе"><option value="— выберите —">— выберите —</option><option value="开场白 · начало">开场白 · начало</option><option value="个人情况 · о себе">个人情况 · о себе</option><option value="结束语 · конец">结束语 · конец</option></select></div><div class="row"><button class="btn" onclick="checkSel('ex10')">Проверить</button><button class="btn gh sm" onclick="resetEx('ex10')">Сбросить</button><span class="res"></span></div><div class="box blue"><div class="box-t">🧩 Готовая структура знакомства</div><div class="scheme"><span class="sl k">开场白</span><span class="arw">→</span><span class="sl v">个人情况</span><span class="arw">→</span><span class="sl k2">结束语</span></div><p><b>开场白:</b> <span class="zh">你好！认识一下。/ 我来介绍一下。/ 我给你们介绍一下。</span></p><p><b>个人情况:</b> <span class="zh">我叫…… / 我是…… / 我是从……来的。/ 我是……学院的…… / 这是……，我的……</span></p><p><b>结束语:</b> <span class="zh">认识你很高兴！/ 咱们加个微信吧。/ 有时间咱们一起……吧。</span></p></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div></section><section id="culture" class="cult"><h2><span class="sec-n">7</span>Страноведение · 中国文化</h2><p class="sec-sub">Имена, WeChat, устройство университета и этикет знакомства</p><div class="cgrid"><div class="ccard"><span class="emoji">🈶</span><h4>Как устроено китайское имя</h4><p>Сначала <b>фамилия</b> (姓 xìng), потом <b>имя</b> (名 míng): <span class="zh">张小薇</span> = фамилия 张 Zhāng + имя 小薇 Xiǎowēi. Фамилия почти всегда односложна, имя — один или два иероглифа. Спросить можно двумя способами:</p><p><span class="zh">你叫什么名字？</span> <span class="py">Nǐ jiào shénme míngzi?</span> — нейтрально, среди ровесников.<br><span class="zh">您贵姓？</span> <span class="py">Nín guìxìng?</span> — вежливо, «как ваша уважаемая фамилия?». Ответ: <span class="zh">免贵姓张。</span> <span class="py">Miǎn guì, xìng Zhāng.</span></p></div><div class="ccard"><span class="emoji">💬</span><h4>Почему имя может «значить»</h4><p>Хуан Цяньюй объясняет: <span class="zh">“千”是“一千”的“千”，“语”是“汉语”的“语”</span>. Так китайцы <b>всегда</b> уточняют, какие именно иероглифы в имени — ведь на слух десятки слогов совпадают. Запомните эту формулу: <span class="zh">X 是 Y 的 X</span>.</p><p>Имя 千语 «тысяча слов» дали девушке, потому что она <span class="zh">非常喜欢说话</span> — любит поговорить. Китайские имена почти всегда содержат пожелание или характеристику: 伟 «великий», 静 «тихая», 明 «светлый».</p></div><div class="ccard"><span class="emoji">🧧</span><h4>Китайское имя для иностранца</h4><p>Герои учебника — иностранцы, но у всех «китайские» имена: <span class="zh">马波罗</span> (Марко Поло), <span class="zh">冯尚德</span>, <span class="zh">林一山</span>, <span class="zh">山川爱子</span>. Обычно преподаватель подбирает фамилию, созвучную вашей, и имя с хорошим значением. Имя из 2–3 иероглифов звучит естественно; транскрипция вроде 亚历山德拉 — только для документов.</p></div><div class="ccard"><span class="emoji">📱</span><h4>微信 — это не просто мессенджер</h4><p><span class="zh">咱们加个微信吧。</span> — самое естественное завершение знакомства в Китае. WeChat заменяет телефон, банковскую карту, проездной, рабочую почту и соцсеть одновременно. Обмен номерами телефона при знакомстве сегодня выглядит старомодно.</p><p>Полезные фразы: <span class="zh">加一下微信 / 扫我 sǎo wǒ («отсканируй меня») / 我发给你 wǒ fā gěi nǐ («я тебе пришлю»)</span>.</p></div><div class="ccard"><span class="emoji">🏫</span><h4>大学 · 学院 · 系</h4><p>Структура китайского вуза: <span class="zh">大学</span> dàxué — университет → <span class="zh">学院</span> xuéyuàn — институт/школа внутри него → <span class="zh">系</span> xì — кафедра. Поэтому 中文学院 — это «Институт китайского языка», а не «колледж».</p><p>Статусы иностранных учащихся: <span class="zh">预科生</span> yùkēshēng — подготовительное отделение; <span class="zh">进修生</span> jìnxiūshēng — языковая стажировка; <span class="zh">交换生</span> jiāohuànshēng — по обмену; <span class="zh">本科生</span> běnkēshēng — бакалавр.</p></div><div class="ccard"><span class="emoji">🗣</span><h4>汉语角 — «уголок китайского»</h4><p>Регулярная встреча, куда приходят иностранные студенты и китайцы, чтобы поговорить по-китайски на свободные темы. В большинстве вузов проходит раз в неделю вечером. Это главный способ найти <span class="zh">语伴</span> <span class="py">yǔbàn</span> — языкового партнёра, с которым вы занимаетесь по обмену: час по-китайски, час на вашем языке.</p></div><div class="ccard"><span class="emoji">🙋</span><h4>Как обратиться к незнакомому</h4><p>В Китае не используют «девушка/молодой человек» так, как в России. Нейтральные варианты:</p><p><span class="zh">你好，请问……</span> — универсально.<br><span class="zh">同学</span> tóngxué — к студенту в кампусе.<br><span class="zh">老师</span> lǎoshī — к преподавателю и вообще к любому сотруднику вуза.<br><span class="zh">师傅</span> shīfu — к водителю, мастеру, рабочему.</p></div><div class="ccard"><span class="emoji">🤝</span><h4>Ритуал первой встречи</h4><p>Китайцы редко обнимаются и почти не целуются при встрече. Норма — лёгкий кивок и рукопожатие, часто двумя руками, если человек старше по возрасту или статусу. Визитку принимают <b>двумя руками</b> и обязательно читают, прежде чем убрать. Сразу класть её в карман — невежливо.</p></div></div></section><section id="produce" class=""><h2><span class="sec-n">8</span>Продукция · 产出</h2><p class="sec-sub">Итоговые речевые задания урока</p><div class="box blue"><div class="box-t">🧰 Опора для высказывания · 任务支持</div><p><b>Лексика урока:</b> <span class="zh">留学生 · 中文 · 学院 · 新生 · 室友 · 遇到 · 咱们 · 啊 · 以为 · 见面 · 加 · 微信</span></p><p><b>Дополнительно:</b> <span class="zh">交换生 · 专业 · 工作 · 爱好 · 下次 · 以后</span></p><div class="scheme"><span class="sl k">开场白</span><span class="arw">→</span><span class="sl v">个人情况</span><span class="arw">→</span><span class="sl k2">结束语</span></div></div><div class="ex-card" id="t1"><div class="ex-h"><span class="ex-tag">Монолог</span><b>Задание 1. 汉语角 — выступление на «уголке китайского»</b></div><div class="ex-b"><p class="ru">«Уголок китайского» — встреча иностранных студентов. Вы пришли туда впервые. Расскажите о себе: имя, страна, факультет, статус, увлечения.</p><p class="ru"><b>Требования:</b> использовать не менее <b>5 слов</b> и <b>3 конструкций</b> урока; длительность около <b>2 минут</b>.</p><textarea class="free" rows="6" placeholder="大家好！我叫……"></textarea><h4>Проверьте себя — что вы использовали:</h4><div class="check-list"><label class="cl"><input type="checkbox"><span>是……的 (откуда приехал)</span></label><label class="cl"><input type="checkbox"><span>也 перед сказуемым</span></label><label class="cl"><input type="checkbox"><span>V + 得 + прилагательное</span></label><label class="cl"><input type="checkbox"><span>因为……，所以……</span></label><label class="cl"><input type="checkbox"><span>咱们</span></label><label class="cl"><input type="checkbox"><span>以为</span></label><label class="cl"><input type="checkbox"><span>开场白 (你好！认识一下。)</span></label><label class="cl"><input type="checkbox"><span>结束语 (咱们加个微信吧。)</span></label></div><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div><div class="ex-card" id="t2"><div class="ex-h"><span class="ex-tag">Диалог</span><b>Задание 2. 角色扮演 — ролевая игра</b></div><div class="ex-b"><p class="ru">Выберите одну из ситуаций, составьте и разыграйте диалог знакомства (2–3 человека).</p><div class="box sun"><b>Ситуация 1.</b> В университете вы встретили китайского студента и хотите познакомиться.<br><b>Ситуация 2.</b> В кофейне вы знакомите своих однокурсников со своим китайским другом.</div><textarea class="free" rows="8" placeholder="A：你好！……&#10;B：……"></textarea><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></div></div></section><section id="eval" class=""><h2><span class="sec-n">9</span>Самооценка · 评价</h2><p class="sec-sub">Отметьте, насколько уверенно вы владеете материалом урока</p><table class="evalt"><thead><tr><th>Что я умею после урока</th><th>совсем<br>нет</th><th>скорее<br>нет</th><th>средне</th><th>скорее<br>да</th><th>да</th></tr></thead><tbody><tr><td>Я понимаю диалог на слух и знаю, где Ма Боло познакомился с Чжан Сяовэй.</td><td class="c"><input type="radio" name="ev0"></td><td class="c"><input type="radio" name="ev0"></td><td class="c"><input type="radio" name="ev0"></td><td class="c"><input type="radio" name="ev0"></td><td class="c"><input type="radio" name="ev0"></td></tr><tr><td>Я умею пользоваться новыми словами урока.</td><td class="c"><input type="radio" name="ev1"></td><td class="c"><input type="radio" name="ev1"></td><td class="c"><input type="radio" name="ev1"></td><td class="c"><input type="radio" name="ev1"></td><td class="c"><input type="radio" name="ev1"></td></tr><tr><td>Я могу рассказать о себе: имя, страна, факультет, статус.</td><td class="c"><input type="radio" name="ev2"></td><td class="c"><input type="radio" name="ev2"></td><td class="c"><input type="radio" name="ev2"></td><td class="c"><input type="radio" name="ev2"></td><td class="c"><input type="radio" name="ev2"></td></tr><tr><td>Я умею начать и закончить разговор при первом знакомстве.</td><td class="c"><input type="radio" name="ev3"></td><td class="c"><input type="radio" name="ev3"></td><td class="c"><input type="radio" name="ev3"></td><td class="c"><input type="radio" name="ev3"></td><td class="c"><input type="radio" name="ev3"></td></tr><tr><td>Я правильно употребляю 是……的, 也 и конструкцию с 得.</td><td class="c"><input type="radio" name="ev4"></td><td class="c"><input type="radio" name="ev4"></td><td class="c"><input type="radio" name="ev4"></td><td class="c"><input type="radio" name="ev4"></td><td class="c"><input type="radio" name="ev4"></td></tr></tbody></table><h4>Кратко о своих результатах · 请简单说说你的收获</h4><p class="ru">1. Какие новые слова и конструкции я использовал(а) в итоговом задании?</p><textarea class="free" rows="2"></textarea><p class="ru">2. Какая структура была у моего высказывания?</p><textarea class="free" rows="2"></textarea><p class="ru">3. Что нужно повторить?</p><textarea class="free" rows="2"></textarea><div class="shot">📸 Пришлите скриншот выполненного упражнения</div></section>
+</main>
+
+<footer>
+  <div class="cr">© 2026 <b>Максим и Валерия</b>. Все права защищены.<br>
+  Все материалы урока — включая тексты, упражнения, оформление и программный код — являются объектом авторского права.
+  Копирование, распространение и использование в коммерческих целях без письменного разрешения авторов запрещены.<br>
+  <span style="font-size:12.5px">Учебная основа: 《新时代汉语口语·初级·上》，朱勇 主编，外语教学与研究出版社. Переводы сверены по БКРС.</span></div>
+</footer>
+
+<div class="ov" onclick="closeDrawer()"></div>
+<aside class="drawer">
+  <div class="dr-h">
+    <h3>📖 Словарь урока</h3>
+    <button class="btn gh sm" onclick="showFC(true)">Карточки</button>
+    <button class="btn gh sm" onclick="showFC(false)">Список</button>
+    <button class="btn bl sm" onclick="closeDrawer()">✕</button>
+  </div>
+
+  <div id="vocab-list-wrap" style="display:flex;flex-direction:column;min-height:0;flex:1">
+    <div class="dr-tools">
+      <input class="search" id="vsearch" placeholder="Поиск: иероглиф, пиньинь или перевод…">
+      <button class="btn gh sm" onclick="vOnlyStar=!vOnlyStar;this.classList.toggle('bl');renderVocab()">★ Только избранные</button>
+      <button class="btn gh sm" onclick="exportJSON()">⬇ JSON</button>
+      <button class="btn gh sm" onclick="exportCSV()">⬇ CSV</button>
+      <button class="btn gh sm" onclick="exportAnki()">⬇ Anki</button>
+      <label class="btn gh sm" style="display:inline-block">⬆ Импорт
+        <input type="file" accept=".json,.csv,.txt" style="display:none" onchange="importWords(this)"></label>
+    </div>
+    <div class="count" id="vcount"></div>
+    <div class="dr-body" id="dr-body"></div>
+  </div>
+
+  <div class="fc-wrap" id="fc-wrap">
+    <div class="dr-tools" style="border:none;background:none;padding:0 0 12px">
+      <select class="dir" id="fc-dir" onchange="buildDeck()">
+        <option value="zh-ru">汉字 → русский</option>
+        <option value="ru-zh">русский → 汉字</option>
+        <option value="py-zh">пиньинь → 汉字</option>
+      </select>
+      <select class="dir" id="fc-scope" onchange="buildDeck()">
+        <option value="all">все слова</option>
+        <option value="star">только ★</option>
+      </select>
+      <label class="cl" style="font-size:13.5px;font-weight:800"><input type="checkbox" id="fc-shuffle" checked onchange="buildDeck()"> перемешать</label>
+    </div>
+    <div class="fc-meta" id="fc-meta"></div>
+    <div class="fc" id="fc" onclick="flip()"></div>
+    <div class="fc-bar">
+      <button class="btn gh sm" onclick="nextCard(-1)">← Назад</button>
+      <button class="btn bl sm" onclick="flip()">Перевернуть</button>
+      <button class="btn gh sm" onclick="starCurrent()">★</button>
+      <button class="btn sm" onclick="nextCard(1)">Дальше →</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+var LESSON_ID = "l1";
+var LESSON_TITLE = "Урок 1 · 你也是留学生吗？ — Знакомство";
+var VOCAB = [{"h": "遇到", "p": "yùdào", "pos": "гл", "r": "случайно встретить, столкнуться с", "e": "遇到朋友 · 在商店遇到老师"}, {"h": "留学生", "p": "liúxuéshēng", "pos": "сущ", "r": "студент, учащийся за границей; иностранный студент", "e": "一个留学生 · 意大利留学生"}, {"h": "中文", "p": "Zhōngwén", "pos": "сущ", "r": "китайский язык (особенно письменный)", "e": "学习中文 · 中文课"}, {"h": "学院", "p": "xuéyuàn", "pos": "сущ", "r": "институт, факультет (в составе университета)", "e": "中文学院 · 旅游学院"}, {"h": "新生", "p": "xīnshēng", "pos": "сущ", "r": "новый студент, первокурсник", "e": "一个新生 · 我是新生。"}, {"h": "咱们", "p": "zánmen", "pos": "мест", "r": "мы (с тобой / с вами — включая собеседника)", "e": "咱们走吧！ · 咱们是同学。"}, {"h": "啊", "p": "à", "pos": "межд", "r": "а!, ах! (внезапное понимание)", "e": "啊……是这样。"}, {"h": "以为", "p": "yǐwéi", "pos": "гл", "r": "полагать (ошибочно), думать (а на деле не так)", "e": "我以为她是中国人。"}, {"h": "意大利", "p": "Yìdàlì", "pos": "геогр", "r": "Италия", "e": "意大利人 · 意大利菜"}, {"h": "法国", "p": "Fǎguó", "pos": "геогр", "r": "Франция", "e": "法国人 · 从法国来"}, {"h": "室友", "p": "shìyǒu", "pos": "сущ", "r": "сосед по комнате", "e": "我的室友 · 三个室友"}, {"h": "见面", "p": "jiànmiàn", "pos": "гл", "r": "встретиться, увидеться", "e": "和朋友见面 · 第一次见面 · 见过面"}, {"h": "加", "p": "jiā", "pos": "гл", "r": "добавить; добавить в контакты", "e": "加一下我的微信 · 加个好友"}, {"h": "微信", "p": "Wēixìn", "pos": "сущ", "r": "WeChat (китайский мессенджер)", "e": "加微信 · 发微信"}, {"h": "俄罗斯", "p": "Éluósī", "pos": "геогр", "r": "Россия", "e": "俄罗斯人 · 从俄罗斯来"}, {"h": "校车", "p": "xiàochē", "pos": "сущ", "r": "школьный / университетский автобус", "e": "坐校车 · 在校车上"}, {"h": "介绍", "p": "jièshào", "pos": "гл", "r": "знакомить, представлять; рассказывать о", "e": "我介绍一下 · 介绍我的室友"}, {"h": "同学", "p": "tóngxué", "pos": "сущ", "r": "одногруппник, соученик", "e": "我的同学 · 同学们"}, {"h": "认识", "p": "rènshi", "pos": "гл", "r": "познакомиться, быть знакомым; знать (человека, иероглиф)", "e": "认识你很高兴 · 认识这个字"}, {"h": "告诉", "p": "gàosu", "pos": "гл", "r": "сказать (кому-то), сообщить", "e": "告诉我 · 他告诉我一件事"}, {"h": "交换生", "p": "jiāohuànshēng", "pos": "сущ", "r": "студент по обмену", "e": "一个交换生"}, {"h": "专业", "p": "zhuānyè", "pos": "сущ", "r": "специальность, направление обучения", "e": "我的专业是中文。"}, {"h": "爱好", "p": "àihào", "pos": "сущ", "r": "увлечение, хобби", "e": "我的爱好是唱歌。"}, {"h": "以后", "p": "yǐhòu", "pos": "сущ", "r": "потом, впоследствии, после", "e": "以后一起吃饭 · 下课以后"}, {"h": "下次", "p": "xiàcì", "pos": "сущ", "r": "в следующий раз", "e": "下次见 · 下次一起去"}];
+
+/* ================= petals ================= */
+(function(){
+  var wrap=document.querySelector('.petals'); if(!wrap) return;
+  var svgs=[
+   '<svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4" fill="#EFC14A"/><g fill="#FFF3C9"><ellipse cx="12" cy="5.5" rx="2.6" ry="4"/><ellipse cx="12" cy="18.5" rx="2.6" ry="4"/><ellipse cx="5.5" cy="12" rx="4" ry="2.6"/><ellipse cx="18.5" cy="12" rx="4" ry="2.6"/></g></svg>',
+   '<svg width="20" height="20" viewBox="0 0 24 24"><g fill="#E9765D"><ellipse cx="12" cy="6" rx="3" ry="4.2"/><ellipse cx="12" cy="18" rx="3" ry="4.2"/><ellipse cx="6" cy="12" rx="4.2" ry="3"/><ellipse cx="18" cy="12" rx="4.2" ry="3"/></g><circle cx="12" cy="12" r="2.8" fill="#FBE3DC"/></svg>',
+   '<svg width="18" height="18" viewBox="0 0 24 24"><g fill="#9A8CC4"><circle cx="12" cy="6" r="2.4"/><circle cx="9" cy="10" r="2.2"/><circle cx="15" cy="10" r="2.2"/><circle cx="12" cy="13.5" r="2"/></g><path d="M12 14v7" stroke="#75965E" stroke-width="1.6" fill="none"/></svg>',
+   '<svg width="20" height="20" viewBox="0 0 24 24"><g fill="#A9C2DC"><ellipse cx="12" cy="7" rx="2.6" ry="3.6"/><ellipse cx="12" cy="17" rx="2.6" ry="3.6"/><ellipse cx="7" cy="12" rx="3.6" ry="2.6"/><ellipse cx="17" cy="12" rx="3.6" ry="2.6"/></g><circle cx="12" cy="12" r="2.2" fill="#EFC14A"/></svg>',
+   '<svg width="19" height="19" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5" fill="#D2452C"/><path d="M12 5.5c-2 0-3.4-1-3.4-1s1 2.6 3.4 2.6 3.4-2.6 3.4-2.6-1.4 1-3.4 1z" fill="#75965E"/></svg>'
+  ];
+  for(var i=0;i<16;i++){
+    var d=document.createElement('div'); d.className='petal';
+    d.innerHTML=svgs[i%svgs.length];
+    d.style.left=(Math.random()*100)+'%';
+    d.style.animationDuration=(16+Math.random()*20)+'s';
+    d.style.animationDelay=(-Math.random()*30)+'s';
+    d.style.opacity=(0.3+Math.random()*0.35);
+    wrap.appendChild(d);
+  }
+})();
+
+/* ================= toggles + progress ================= */
+function tgl(kind, btn){
+  var cls = kind==='py' ? 'no-py' : 'no-tr';
+  document.body.classList.toggle(cls);
+  var off = document.body.classList.contains(cls);
+  btn.classList.toggle('off', off);
+  var labelOn  = kind==='py' ? 'Пиньинь: вкл'  : 'Перевод: вкл';
+  var labelOff = kind==='py' ? 'Пиньинь: выкл' : 'Перевод: выкл';
+  btn.textContent = off ? labelOff : labelOn;
+  try{ localStorage.setItem('nsd_'+kind, off?'0':'1'); }catch(e){}
+}
+(function(){
+  ['py','tr'].forEach(function(k){
+    var v=null; try{ v=localStorage.getItem('nsd_'+k); }catch(e){}
+    if(v==='0'){ var b=document.getElementById('btn-'+k); if(b) tgl(k,b); }
+  });
+  var bar=document.querySelector('.progress i');
+  function upd(){
+    var h=document.documentElement;
+    var p=(h.scrollTop)/((h.scrollHeight-h.clientHeight)||1)*100;
+    if(bar) bar.style.width=Math.min(100,Math.max(0,p))+'%';
+  }
+  window.addEventListener('scroll',upd,{passive:true}); upd();
+})();
+
+/* ================= vocabulary ================= */
+var STAR_KEY = 'nsd_star_' + LESSON_ID;
+var stars = {};
+try{ stars = JSON.parse(localStorage.getItem(STAR_KEY)||'{}'); }catch(e){ stars={}; }
+function saveStars(){ try{ localStorage.setItem(STAR_KEY, JSON.stringify(stars)); }catch(e){} }
+function isStar(h){ return !!stars[h]; }
+function toggleStar(h, el){
+  if(stars[h]) delete stars[h]; else stars[h]=1;
+  saveStars();
+  document.querySelectorAll('[data-star="'+h+'"]').forEach(function(n){ n.classList.toggle('on', !!stars[h]); });
+  document.querySelectorAll('[data-vcard="'+h+'"]').forEach(function(n){ n.classList.toggle('star', !!stars[h]); });
+  renderVocab();
+}
+
+function openDrawer(){ document.querySelector('.drawer').classList.add('on'); document.querySelector('.ov').classList.add('on'); renderVocab(); }
+function closeDrawer(){ document.querySelector('.drawer').classList.remove('on'); document.querySelector('.ov').classList.remove('on'); }
+
+var vFilter='';
+var vOnlyStar=false;
+function renderVocab(){
+  var body=document.getElementById('dr-body'); if(!body) return;
+  var q=vFilter.trim().toLowerCase();
+  var list=VOCAB.filter(function(w){
+    if(vOnlyStar && !isStar(w.h)) return false;
+    if(!q) return true;
+    return (w.h+' '+w.p+' '+w.r+' '+(w.e||'')).toLowerCase().indexOf(q)>-1;
+  });
+  document.getElementById('vcount').textContent='Показано слов: '+list.length+' из '+VOCAB.length+' · отмечено: '+Object.keys(stars).length;
+  body.innerHTML = list.map(function(w){
+    return '<div class="vcard'+(isStar(w.h)?' star':'')+'" data-vcard="'+w.h+'">'+
+      '<button class="star'+(isStar(w.h)?' on':'')+'" data-star="'+w.h+'" onclick="toggleStar(\''+w.h+'\',this)" title="В избранное">★</button>'+
+      '<div class="m"><div class="h">'+w.h+'</div><div class="p">'+w.p+'</div>'+
+      '<div class="r">'+(w.pos?'<span class="pos">'+w.pos+'</span> ':'')+w.r+'</div>'+
+      (w.e?'<div class="e">'+w.e+'</div>':'')+'</div></div>';
+  }).join('') || '<p class="ru">Ничего не найдено.</p>';
+}
+
+function exportJSON(){
+  var data = VOCAB.map(function(w){ return {hanzi:w.h,pinyin:w.p,ru:w.r,pos:w.pos||'',example:w.e||'',starred:isStar(w.h)}; });
+  dl(JSON.stringify({lesson:LESSON_ID,title:LESSON_TITLE,words:data},null,2), LESSON_ID+'_slova.json','application/json');
+}
+function exportCSV(){
+  var rows=[['hanzi','pinyin','russian','pos','example','starred']];
+  VOCAB.forEach(function(w){ rows.push([w.h,w.p,w.r,w.pos||'',(w.e||''),isStar(w.h)?'1':'0']); });
+  var csv='\ufeff'+rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(';'); }).join('\n');
+  dl(csv, LESSON_ID+'_slova.csv','text/csv');
+}
+function exportAnki(){
+  var lines=VOCAB.map(function(w){ return w.h+'\t'+w.p+'\t'+w.r; });
+  dl('\ufeff'+lines.join('\n'), LESSON_ID+'_anki.txt','text/plain');
+}
+function dl(text,name,type){
+  var b=new Blob([text],{type:type+';charset=utf-8'});
+  var u=URL.createObjectURL(b); var a=document.createElement('a');
+  a.href=u; a.download=name; document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(u); },300);
+}
+function importWords(inp){
+  var f=inp.files && inp.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){
+    var t=String(r.result); var added=0;
+    try{
+      if(f.name.toLowerCase().indexOf('.json')>-1){
+        var o=JSON.parse(t); var arr=o.words||o;
+        arr.forEach(function(w){
+          var h=w.hanzi||w.h; if(!h) return;
+          if(!VOCAB.some(function(x){return x.h===h;})){
+            VOCAB.push({h:h,p:w.pinyin||w.p||'',r:w.ru||w.r||'',pos:w.pos||'',e:w.example||w.e||''}); added++;
+          }
+          if(w.starred) stars[h]=1;
+        });
+      } else {
+        t.replace(/^\ufeff/,'').split(/\r?\n/).forEach(function(line,i){
+          if(!line.trim()) return;
+          var c=line.split(/[;\t]/).map(function(s){ return s.replace(/^"|"$/g,'').replace(/""/g,'"').trim(); });
+          if(i===0 && /hanzi|иероглиф/i.test(c[0])) return;
+          if(!c[0]) return;
+          if(!VOCAB.some(function(x){return x.h===c[0];})){
+            VOCAB.push({h:c[0],p:c[1]||'',r:c[2]||'',pos:c[3]||'',e:c[4]||''}); added++;
+          }
+        });
+      }
+      saveStars(); renderVocab(); buildDeck();
+      alert('Импортировано новых слов: '+added);
+    }catch(e){ alert('Не удалось прочитать файл: '+e.message); }
+    inp.value='';
+  };
+  r.readAsText(f,'utf-8');
+}
+
+/* ================= flashcards ================= */
+var deck=[], di=0, flipped=false;
+function buildDeck(){
+  var src = document.getElementById('fc-scope').value==='star'
+    ? VOCAB.filter(function(w){ return isStar(w.h); })
+    : VOCAB.slice();
+  if(document.getElementById('fc-shuffle').checked){
+    for(var i=src.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=src[i]; src[i]=src[j]; src[j]=t; }
+  }
+  deck=src; di=0; flipped=false; drawCard();
+}
+function drawCard(){
+  var el=document.getElementById('fc'); if(!el) return;
+  if(!deck.length){ el.innerHTML='<div><div class="bigru">Карточек нет</div><div class="hint">Отметьте слова звёздочкой или выберите «все слова».</div></div>'; document.getElementById('fc-meta').textContent=''; return; }
+  var w=deck[di], dir=document.getElementById('fc-dir').value, front, back;
+  if(dir==='zh-ru'){ front='<div class="big">'+w.h+'</div>'; back='<div class="bigpy">'+w.p+'</div><div class="sub"><b>'+w.r+'</b></div>'+(w.e?'<div class="sub" style="font-family:\'Noto Serif SC\',serif">'+w.e+'</div>':''); }
+  else if(dir==='ru-zh'){ front='<div class="bigru">'+w.r+'</div>'; back='<div class="big">'+w.h+'</div><div class="bigpy" style="font-size:20px">'+w.p+'</div>'; }
+  else { front='<div class="bigpy">'+w.p+'</div>'; back='<div class="big">'+w.h+'</div><div class="sub"><b>'+w.r+'</b></div>'; }
+  el.innerHTML = '<div>'+(flipped? front+'<div style="height:10px"></div>'+back : front+'<div class="hint">нажмите, чтобы перевернуть</div>')+'</div>';
+  document.getElementById('fc-meta').textContent=(di+1)+' / '+deck.length+(isStar(w.h)?' ★':'');
+}
+function flip(){ flipped=!flipped; drawCard(); }
+function nextCard(d){ if(!deck.length) return; di=(di+d+deck.length)%deck.length; flipped=false; drawCard(); }
+function starCurrent(){ if(!deck.length) return; toggleStar(deck[di].h); drawCard(); }
+function showFC(on){
+  document.getElementById('fc-wrap').classList.toggle('on',on);
+  document.getElementById('vocab-list-wrap').style.display = on?'none':'';
+  if(on) buildDeck();
+}
+
+/* ================= exercises ================= */
+function norm(s){
+  return String(s||'').replace(/[\s,.!?;:，。！？；：、"'“”‘’()（）]/g,'').toLowerCase();
+}
+function checkFill(id){
+  var box=document.getElementById(id), ok=0, tot=0;
+  box.querySelectorAll('input.fill').forEach(function(inp){
+    tot++;
+    var ans=(inp.dataset.a||'').split('|').map(norm);
+    if(ans.indexOf(norm(inp.value))>-1){ inp.classList.add('ok'); inp.classList.remove('no'); ok++; }
+    else { inp.classList.add('no'); inp.classList.remove('ok'); }
+  });
+  say(id, ok, tot);
+}
+function checkMC(id){
+  var box=document.getElementById(id), ok=0, tot=0;
+  var groups={};
+  box.querySelectorAll('input[type=radio]').forEach(function(r){ groups[r.name]=1; });
+  Object.keys(groups).forEach(function(n){
+    tot++;
+    var sel=box.querySelector('input[name="'+n+'"]:checked');
+    box.querySelectorAll('input[name="'+n+'"]').forEach(function(r){
+      r.parentNode.classList.remove('ok','no');
+      if(r.dataset.c==='1') r.parentNode.classList.add('ok');
+    });
+    if(sel && sel.dataset.c==='1') ok++;
+    else if(sel) sel.parentNode.classList.add('no');
+  });
+  say(id, ok, tot);
+}
+function checkSel(id){
+  var box=document.getElementById(id), ok=0, tot=0;
+  box.querySelectorAll('select.msel').forEach(function(s){
+    tot++;
+    if(s.value===s.dataset.a){ s.classList.add('ok'); s.classList.remove('no'); ok++; }
+    else { s.classList.add('no'); s.classList.remove('ok'); }
+  });
+  say(id, ok, tot);
+}
+function say(id, ok, tot){
+  var r=document.querySelector('#'+id+' .res'); if(!r) return;
+  r.className='res '+(ok===tot?'ok':'no');
+  r.textContent = ok===tot ? ('✓ Отлично! Верно '+ok+' из '+tot) : ('Верно '+ok+' из '+tot+' — исправьте выделенные красным и проверьте ещё раз.');
+}
+function resetEx(id){
+  var box=document.getElementById(id);
+  box.querySelectorAll('input.fill').forEach(function(i){ i.value=''; i.classList.remove('ok','no'); });
+  box.querySelectorAll('select.msel').forEach(function(s){ s.selectedIndex=0; s.classList.remove('ok','no'); });
+  box.querySelectorAll('input[type=radio]').forEach(function(r){ r.checked=false; r.parentNode.classList.remove('ok','no'); });
+  box.querySelectorAll('.chipw').forEach(function(c){ c.classList.remove('used'); });
+  box.querySelectorAll('.built').forEach(function(b){ b.textContent=''; });
+  var r=box.querySelector('.res'); if(r){ r.textContent=''; r.className='res'; }
+}
+function toggleReveal(id, btn){
+  var b=document.getElementById(id); b.classList.toggle('on');
+  btn.textContent = b.classList.contains('on') ? 'Скрыть образец' : 'Показать образец';
+}
+/* sentence assembly */
+function pickChip(el, targetId){
+  var t=document.getElementById(targetId);
+  if(el.classList.contains('used')){ el.classList.remove('used'); rebuild(targetId); return; }
+  el.classList.add('used'); el.dataset.ord=Date.now();
+  rebuild(targetId);
+}
+function rebuild(targetId){
+  var t=document.getElementById(targetId);
+  var box=t.closest('.ex-b');
+  var used=Array.prototype.slice.call(box.querySelectorAll('.chipw.used'));
+  used.sort(function(a,b){ return (+a.dataset.ord)-(+b.dataset.ord); });
+  t.textContent=used.map(function(c){ return c.textContent; }).join('');
+}
+function checkAssemble(id, targetId){
+  var t=document.getElementById(targetId);
+  var ans=(t.dataset.a||'').split('|').map(norm);
+  var r=document.querySelector('#'+id+' .res');
+  var good=ans.indexOf(norm(t.textContent))>-1;
+  r.className='res '+(good?'ok':'no');
+  r.textContent = good ? '✓ Верно!' : 'Пока не так — попробуйте изменить порядок.';
+}
+/* autogrow */
+document.addEventListener('input', function(e){
+  if(e.target.classList && e.target.classList.contains('free')){
+    e.target.style.height='auto'; e.target.style.height=(e.target.scrollHeight+4)+'px';
+  }
+});
+
+/* init */
+document.addEventListener('DOMContentLoaded', function(){
+  var s=document.getElementById('vsearch');
+  if(s) s.addEventListener('input', function(){ vFilter=this.value; renderVocab(); });
+  renderVocab();
+});
+
+</script>
+</body>
+</html>
